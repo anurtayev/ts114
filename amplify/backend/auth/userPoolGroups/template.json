@@ -1,0 +1,68 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "authts11405d230f105d230f1UserPoolId": {
+            "Type": "String",
+            "Default": "authts11405d230f105d230f1UserPoolId"
+        },
+        
+        "authts11405d230f105d230f1AppClientID": {
+            "Type": "String",
+            "Default": "authts11405d230f105d230f1AppClientID"
+        },
+        "authts11405d230f105d230f1AppClientIDWeb": {
+            "Type": "String",
+            "Default": "authts11405d230f105d230f1AppClientIDWeb"
+        },
+        "AuthRoleArn": {
+            "Type": "String"
+        },
+        "UnauthRoleArn": {
+            "Type": "String"
+        },
+        "env": {
+            "Type": "String"
+        }
+    },
+    "Conditions": {
+        "ShouldNotCreateEnvResources": {
+            "Fn::Equals": [
+                {
+                    "Ref": "env"
+                },
+                "NONE"
+            ]
+        }
+    },
+    "Resources": {
+    
+        "AdministratorsGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "Administrators",
+              "Precedence" : 1,
+              
+              "UserPoolId" : {
+                "Ref": "authts11405d230f105d230f1UserPoolId"
+              } 
+            }
+        },
+        
+    
+        "UsersGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "Users",
+              "Precedence" : 2,
+              
+              "UserPoolId" : {
+                "Ref": "authts11405d230f105d230f1UserPoolId"
+              } 
+            }
+        },
+        
+    
+    
+    },
+    
+}
