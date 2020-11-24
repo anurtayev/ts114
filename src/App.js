@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import {
   AmplifyAuthenticator,
   AmplifySignUp,
   AmplifySignIn,
-  AmplifySignOut,
 } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import { Switch, Route, useHistory } from "react-router-dom";
 
-const App = () => {
+import { GlobalContext, getDefaultRoute, routes } from "common";
+import { AccountingScreen } from "components/AccountingScreen";
+import { ProjectsScreen } from "components/ProjectsScreen";
+import { TimesheetScreen } from "components/TimesheetScreen";
+import { NavBar } from "components/NavBar";
+
+export const App = () => {
   const [authState, setAuthState] = useState();
   const [user, setUser] = useState();
+  const history = useHistory();
 
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
@@ -19,11 +25,26 @@ const App = () => {
     });
   }, []);
 
+  useEffect(() => {
+    console.log("==> push to history", history, user);
+    history && user && history.push(getDefaultRoute(user));
+  }, [history, user]);
+
   return authState === AuthState.SignedIn && user ? (
-    <div className="App">
-      <div>Hello, {user.attributes.email}</div>
-      <AmplifySignOut />
-    </div>
+    <GlobalContext.Provider value={{ user }}>
+      <NavBar />
+      <Switch>
+        <Route exact path={routes.accounting}>
+          <AccountingScreen />
+        </Route>
+        <Route path={routes.timesheets}>
+          <TimesheetScreen />
+        </Route>
+        <Route path={routes.projects}>
+          <ProjectsScreen />
+        </Route>
+      </Switch>
+    </GlobalContext.Provider>
   ) : (
     <AmplifyAuthenticator usernameAlias="email">
       <AmplifySignUp
@@ -48,5 +69,3 @@ const App = () => {
     </AmplifyAuthenticator>
   );
 };
-
-export default App;

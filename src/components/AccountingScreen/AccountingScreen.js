@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import "./AccountingScreen.styles.js";
 import { API, graphqlOperation } from "aws-amplify";
 import { createProject } from "../../graphql/mutations";
 import { listProjects } from "../../graphql/queries";
 import styled from "styled-components";
-import { withAuthenticator } from "@aws-amplify/ui-react";
 
 const RedContainer = styled.div`
   width: 400;
@@ -19,7 +18,7 @@ const RedContainer = styled.div`
 
 const initialState = { name: "", number: "", tasks: ["t1", "t2"] };
 
-function App() {
+export const AccountingScreen = () => {
   const [formState, setFormState] = useState(initialState);
   const [projects, setProjects] = useState([]);
 
@@ -79,7 +78,7 @@ function App() {
       ))}
     </RedContainer>
   );
-}
+};
 
 const styles = {
   container: {
@@ -108,35 +107,3 @@ const styles = {
     padding: "12px 0px",
   },
 };
-
-const signUpConfig = {
-  hiddenDefaults: ["username"],
-  signUpFields: [
-    {
-      label: "Email",
-      key: "username", // !!!
-      required: true,
-      displayOrder: 1,
-      type: "email",
-      custom: false,
-    },
-    {
-      label: "Password",
-      key: "password",
-      required: true,
-      displayOrder: 2,
-      type: "password",
-      custom: false,
-    },
-    {
-      label: "Phone Number",
-      key: "phone_number",
-      required: true,
-      displayOrder: 3,
-      type: "tel",
-      custom: false,
-    },
-  ],
-};
-
-export default withAuthenticator(App, { signUpConfig });
