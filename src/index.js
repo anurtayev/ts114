@@ -1,19 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import { App } from "./App";
-import reportWebVitals from "./reportWebVitals";
 import Amplify from "aws-amplify";
-import awsExports from "./aws-exports";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+
+import reportWebVitals from "./reportWebVitals";
+import awsExports from "./aws-exports";
+import { App } from "./App";
+import { theme } from "common";
+
+import "./index.css";
 
 Amplify.configure(awsExports);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <App />
+      </Router>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

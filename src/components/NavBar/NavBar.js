@@ -1,8 +1,11 @@
-import { AmplifySignOut } from "@aws-amplify/ui-react";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 
-import { NavBarContainer, Banner } from "./NavBar.styles";
+import {
+  NavBarContainer,
+  Banner,
+  StyledRouterLink,
+  AmplifySignOutStyled,
+} from "./NavBar.styles";
 import { GlobalContext, routes, isAdmin } from "common";
 
 export const NavBar = (props) => {
@@ -15,17 +18,13 @@ export const NavBar = (props) => {
       <Banner>{user.signInUserSession.idToken.payload.email}</Banner>
 
       {isAdmin(user) && (
-        <ul>
-          <li>
-            <Link to={routes.accounting}>Accounting</Link>
-          </li>
-          <li>
-            <Link to={routes.projects}>Projects</Link>
-          </li>
-        </ul>
+        <>
+          <StyledRouterLink to={routes.accounting}>Accounting</StyledRouterLink>
+          <StyledRouterLink to={routes.projects}>Projects</StyledRouterLink>
+        </>
       )}
 
-      <AmplifySignOut />
+      <AmplifySignOutStyled />
     </NavBarContainer>
   );
 };
