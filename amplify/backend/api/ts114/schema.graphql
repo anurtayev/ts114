@@ -8,6 +8,7 @@ type Project @model {
 type Record @model {
   id: ID!
   project: Project! @connection
+  projectTask: String!
 
   date: AWSDateTime!
   hours: Float!
@@ -15,7 +16,4 @@ type Record @model {
   submitted: Boolean!
   invoiced: Boolean!
   userId: String!
-  username: String!
-
-  projectTask: String!
 }

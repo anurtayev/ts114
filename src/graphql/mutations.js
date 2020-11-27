@@ -61,14 +61,13 @@ export const createRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      projectTask
       date
       hours
       description
       submitted
       invoiced
       userId
-      username
-      projectTask
       createdAt
       updatedAt
     }
@@ -89,14 +88,13 @@ export const updateRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      projectTask
       date
       hours
       description
       submitted
       invoiced
       userId
-      username
-      projectTask
       createdAt
       updatedAt
     }
@@ -117,14 +115,13 @@ export const deleteRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      projectTask
       date
       hours
       description
       submitted
       invoiced
       userId
-      username
-      projectTask
       createdAt
       updatedAt
     }

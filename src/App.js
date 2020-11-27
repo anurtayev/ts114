@@ -26,7 +26,6 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log("==> push to history", history, user);
     history && user && history.push(getDefaultRoute(user));
   }, [history, user]);
 

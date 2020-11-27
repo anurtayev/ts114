@@ -44,14 +44,13 @@ export const getRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      projectTask
       date
       hours
       description
       submitted
       invoiced
       userId
-      username
-      projectTask
       createdAt
       updatedAt
     }
@@ -74,14 +73,13 @@ export const listRecords = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        projectTask
         date
         hours
         description
         submitted
         invoiced
         userId
-        username
-        projectTask
         createdAt
         updatedAt
       }

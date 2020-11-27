@@ -49,14 +49,13 @@ export const onCreateRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      projectTask
       date
       hours
       description
       submitted
       invoiced
       userId
-      username
-      projectTask
       createdAt
       updatedAt
     }
@@ -74,14 +73,13 @@ export const onUpdateRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      projectTask
       date
       hours
       description
       submitted
       invoiced
       userId
-      username
-      projectTask
       createdAt
       updatedAt
     }
@@ -99,14 +97,13 @@ export const onDeleteRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      projectTask
       date
       hours
       description
       submitted
       invoiced
       userId
-      username
-      projectTask
       createdAt
       updatedAt
     }

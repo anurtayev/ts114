@@ -1,15 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
+import { ContainerDiv } from "common";
 
-export const NavBarContainer = styled.div`
-  background: ${(props) => props.theme.primaryColor};
+export const NavBarContainer = styled(ContainerDiv)`
   display: flex;
   align-items: center;
-  border: 1px solid #ccc;
-  margin: 1em;
-  border-radius: 0.4em;
-  padding: 1em;
 `;
 
 export const Banner = styled.div``;
@@ -24,7 +20,7 @@ export const StyledRouterLink = styled(Link)`
   align-items: center;
   padding: 0 1em;
   text-decoration: none;
-  font-family: Amazon Ember", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Amazon Ember", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-stretch: 100%;
   font-weight: 600;

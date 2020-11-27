@@ -1,5 +1,6 @@
 import styled from "styled-components";
+import { ContainerDiv } from "common";
 
-export const App = styled.div`
+export const Container = styled(ContainerDiv)`
   text-align: center;
 `;
