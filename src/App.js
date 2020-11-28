@@ -9,6 +9,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 
 import { GlobalContext, getDefaultRoute, routes } from "common";
 import { AccountingScreen } from "components/AccountingScreen";
+import { ProjectForm } from "components/ProjectForm";
 import { ProjectsScreen } from "components/ProjectsScreen";
 import { TimesheetScreen } from "components/TimesheetScreen";
 import { NavBar } from "components/NavBar";
@@ -41,6 +42,9 @@ export const App = () => {
         </Route>
         <Route path={routes.projects}>
           <ProjectsScreen />
+        </Route>
+        <Route path={routes.projectForm}>
+          <ProjectForm />
         </Route>
       </Switch>
     </GlobalContext.Provider>

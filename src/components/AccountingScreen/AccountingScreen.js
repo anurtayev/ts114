@@ -36,7 +36,7 @@ export const AccountingScreen = () => {
       const projects = projectsData.data.listTodos.items;
       setProjects(projects);
     } catch (err) {
-      console.log("error fetching todos");
+      console.log("error fetching todos 1");
     }
   }
 

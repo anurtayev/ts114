@@ -1,20 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./AccountingScreen.styles.js";
 import { API, graphqlOperation } from "aws-amplify";
 import { createProject } from "../../graphql/mutations";
 import { listProjects } from "../../graphql/queries";
-import styled from "styled-components";
-
-const RedContainer = styled.div`
-  width: 400;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20;
-  border: 1px solid;
-  margin: 1em;
-`;
+import { RedContainer } from "./TimesheetScreen.styles";
 
 const initialState = { name: "", number: "", tasks: ["t1", "t2"] };
 
@@ -36,7 +24,7 @@ export const TimesheetScreen = () => {
       const projects = projectsData.data.listTodos.items;
       setProjects(projects);
     } catch (err) {
-      console.log("error fetching todos");
+      console.log("error fetching todos 3");
     }
   }
 
