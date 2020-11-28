@@ -1,38 +1,46 @@
 import React from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { createProject } from "../../graphql/mutations";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import * as Yup from "yup";
+
+import { FieldElement } from "./FieldElement";
+import { StyledForm, StyledSubmitButton } from "./ProjectForm.styles";
 
 const ProjectSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
-    .required("Required"),
+    .required("Required")
+    .meta({ title: "Project name" }),
   number: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
-    .required("Required"),
+    .required("Required")
+    .meta({ title: "Project number" }),
+  tasks: Yup.array()
+    .of(Yup.string().min(1).required())
+    .min(1)
+    .required()
+    .meta({ title: "Project tasks" }),
 });
-
-console.log("==>", ProjectSchema);
-console.log("==>", Reflect.ownKeys(ProjectSchema.describe().fields));
+const fields = ProjectSchema.describe().fields;
 
 export const ProjectForm = ({
   // id = "",
   name = "",
   number = "",
-  // tasks = [],
+  tasks = [],
 }) => (
   <Formik
-    initialValues={{ name, number }}
+    initialValues={{ name, number, tasks }}
     validationSchema={ProjectSchema}
     onSubmit={async (values, { setSubmitting }) => {
       try {
         await API.graphql(
           graphqlOperation(createProject, {
-            input: { ...values, id: uuidv4(), tasks: ["t1", "t3"] },
+            input: { ...values, id: uuidv4() },
           })
         );
         setSubmitting(false);
@@ -41,20 +49,24 @@ export const ProjectForm = ({
       }
     }}
   >
-    {({ isSubmitting, errors, touched }) => (
-      <Form>
-        <label htmlFor="name">Project Name</label>
-        <Field name="name" />
-        <ErrorMessage name="name" component="div" />
-
-        <label htmlFor="number">Project Number</label>
-        <Field name="number" />
-        <ErrorMessage name="number" component="div" />
-
-        <button type="submit" disabled={isSubmitting}>
+    {({ isSubmitting, errors, touched, values }) => (
+      <StyledForm>
+        {
+          <>
+            {Reflect.ownKeys(fields).map((name, index) => (
+              <FieldElement
+                name={name}
+                key={index}
+                descriptor={fields[name]}
+                payload={values[name]}
+              ></FieldElement>
+            ))}
+          </>
+        }
+        <StyledSubmitButton type="submit" disabled={isSubmitting}>
           Submit
-        </button>
-      </Form>
+        </StyledSubmitButton>
+      </StyledForm>
     )}
   </Formik>
 );
