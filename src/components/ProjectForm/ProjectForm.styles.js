@@ -1,14 +1,11 @@
 import { Form } from "formik";
 import styled from "styled-components";
+import { ContainerStyles } from "common";
 
-export const StyledForm = styled(Form)`
+export const StyledForm = styled(styled(Form)([ContainerStyles]))`
   background: ${(props) => props.theme.primaryColor};
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
-  margin: 1em;
-  border-radius: 0.4em;
-  padding: 1em;
 `;
 
 export const StyledSubmitButton = styled.button`

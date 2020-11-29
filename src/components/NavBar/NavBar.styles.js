@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
-import { ContainerDiv } from "common";
+import { ContainerStyles } from "common";
 
-export const NavBarContainer = styled(ContainerDiv)`
+export const NavBarContainer = styled(styled.div([ContainerStyles]))`
+  background: ${(props) => props.theme.primaryColor};
   display: flex;
   align-items: center;
 `;

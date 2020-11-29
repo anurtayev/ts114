@@ -43,6 +43,9 @@ export const App = () => {
         <Route path={routes.projects}>
           <ProjectsScreen />
         </Route>
+        <Route path={`${routes.projectForm}/:project`}>
+          <ProjectForm />
+        </Route>
         <Route path={routes.projectForm}>
           <ProjectForm />
         </Route>

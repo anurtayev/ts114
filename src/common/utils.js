@@ -13,7 +13,7 @@ export const securityGroups = {
 };
 
 export const defaultRoutes = {};
-defaultRoutes[securityGroups.administrators] = routes.projectForm;
+defaultRoutes[securityGroups.administrators] = routes.projects;
 defaultRoutes[securityGroups.users] = routes.timesheets;
 
 export const GlobalContext = createContext();
