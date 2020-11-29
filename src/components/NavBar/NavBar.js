@@ -21,6 +21,9 @@ export const NavBar = (props) => {
         <>
           <StyledRouterLink to={routes.accounting}>Accounting</StyledRouterLink>
           <StyledRouterLink to={routes.projects}>Projects</StyledRouterLink>
+          <StyledRouterLink to={routes.projectForm}>
+            New project
+          </StyledRouterLink>
         </>
       )}
 

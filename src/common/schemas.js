@@ -15,6 +15,7 @@ export const getView = ({ descriptors, view = "default" }) =>
       name: field,
       ...descriptors[field].meta.view[view],
       title: descriptors[field].meta.title,
+      type: descriptors[field].type,
     }));
 
 export const ProjectSchema = Yup.object().shape({

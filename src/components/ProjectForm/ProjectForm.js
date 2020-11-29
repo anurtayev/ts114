@@ -1,39 +1,79 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { Formik } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import { createProject } from "graphql/mutations";
+import { getProject } from "graphql/queries";
+import { createProject, updateProject } from "graphql/mutations";
 import { FieldElement } from "./FieldElement";
 import { StyledForm, StyledSubmitButton } from "./ProjectForm.styles";
-import { ProjectSchema, getDescriptors, getView } from "common";
+import { ProjectSchema, getDescriptors, getView, routes } from "common";
 
 const descriptors = getDescriptors(ProjectSchema);
 const view = getView({ descriptors });
 
-export const ProjectForm = ({
-  // id = "",
-  name = "",
-  number = "",
-  tasks = [],
-}) => {
-  let { project } = useParams();
-  console.log("==> project", project);
+export const ProjectForm = () => {
+  const { projectId } = useParams();
+  const [project, setProject] = useState({
+    name: "",
+    number: "",
+    tasks: [],
+  });
+  const history = useHistory();
+  const [redirectTo, setRedirectTo] = useState();
+
+  useEffect(() => {
+    redirectTo && history.push(redirectTo);
+  }, [history, redirectTo]);
+
+  useEffect(() => {
+    projectId && fetchProject(projectId);
+  }, [projectId]);
+
+  async function fetchProject(projectId) {
+    const promise = API.graphql(
+      graphqlOperation(getProject, { input: { id: projectId } })
+    );
+    try {
+      const {
+        data: {
+          listProjects: { items: project },
+        },
+      } = await promise;
+      setProject(project);
+    } catch (err) {
+      console.error(err.message);
+    }
+
+    return function cleanup() {
+      API.cancel(promise, "getProject request has been canceled");
+    };
+  }
+
   return (
     <Formik
-      initialValues={{ name, number, tasks }}
+      initialValues={project}
       validationSchema={ProjectSchema}
       onSubmit={async (values, { setSubmitting }) => {
+        const promise = projectId
+          ? API.graphql(
+              graphqlOperation(updateProject, {
+                input: { ...values, id: projectId },
+              })
+            )
+          : API.graphql(
+              graphqlOperation(createProject, {
+                input: { ...values, id: uuidv4() },
+              })
+            );
         try {
-          await API.graphql(
-            graphqlOperation(createProject, {
-              input: { ...values, id: uuidv4() },
-            })
-          );
+          await promise;
           setSubmitting(false);
+          setRedirectTo(routes.projects);
         } catch (err) {
-          console.log("error creating todo:", err);
+          console.error(err.message);
         }
       }}
     >
@@ -41,13 +81,12 @@ export const ProjectForm = ({
         <StyledForm>
           {
             <>
-              {view.map((name, index) => (
+              {view.map((field, index) => (
                 <FieldElement
-                  name={name}
+                  field={field}
                   key={index}
-                  descriptor={descriptors[name]}
-                  payload={values[name]}
-                ></FieldElement>
+                  payload={values[field.name]}
+                />
               ))}
             </>
           }

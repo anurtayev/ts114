@@ -3,18 +3,18 @@ import { Field, ErrorMessage, FieldArray } from "formik";
 
 import { FieldContainer, StyledLabel } from "./FieldElement.styles";
 
-export const FieldElement = ({ name, descriptor, payload }) => (
+export const FieldElement = ({ field, payload }) => (
   <FieldContainer>
-    <StyledLabel htmlFor={name}>{descriptor.meta.title}</StyledLabel>
-    {descriptor.type === "array" ? (
+    <StyledLabel htmlFor={field.name}>{field.title}</StyledLabel>
+    {field.type === "array" ? (
       <FieldArray
-        name={name}
+        name={field.name}
         render={(arrayHelpers) => (
           <div>
             {payload && payload.length > 0 ? (
               payload.map((friend, index) => (
                 <div key={index}>
-                  <Field name={`${name}.${index}`} />
+                  <Field name={`${field.name}.${index}`} />
                   <button
                     type="button"
                     onClick={() => arrayHelpers.remove(index)}
@@ -38,8 +38,8 @@ export const FieldElement = ({ name, descriptor, payload }) => (
         )}
       />
     ) : (
-      <Field name={name} />
+      <Field name={field.name} />
     )}
-    <ErrorMessage name={name} component="div" />
+    <ErrorMessage name={field.name} component="div" />
   </FieldContainer>
 );
