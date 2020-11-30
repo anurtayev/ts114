@@ -11,7 +11,6 @@ export const AccountingScreen = () => {
     fetchRecords();
   }, []);
 
-  console.log("==> records", records);
   async function fetchRecords() {
     try {
       const projectsData = await API.graphql(graphqlOperation(listProjects));

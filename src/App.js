@@ -43,7 +43,7 @@ export const App = () => {
         <Route path={routes.projects}>
           <ProjectsScreen />
         </Route>
-        <Route path={`${routes.projectForm}/:projectId`}>
+        <Route path={`${routes.projectForm}/:id`}>
           <ProjectForm />
         </Route>
         <Route path={routes.projectForm}>
