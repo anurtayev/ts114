@@ -23,9 +23,13 @@ export const ProjectsScreen = () => {
           listProjects: { items: projects },
         },
       } = await API.graphql(graphqlOperation(listProjects));
-      setProjects(projects);
+      setProjects(
+        projects.sort((a, b) =>
+          a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+        )
+      );
     } catch (err) {
-      console.log("error fetching todos 2");
+      console.error(err);
     }
   }
 
