@@ -27,7 +27,10 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    history && user && history.push(getDefaultRoute(user));
+    history &&
+      user &&
+      user.signInUserSession &&
+      history.push(getDefaultRoute(user));
   }, [history, user]);
 
   return authState === AuthState.SignedIn && user ? (

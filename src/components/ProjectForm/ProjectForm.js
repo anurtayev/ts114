@@ -7,7 +7,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { getProject } from "graphql/queries";
 import { createProject, updateProject } from "graphql/mutations";
 import { FieldElement } from "./FieldElement";
-import { StyledForm, StyledSubmitButton } from "./ProjectForm.styles";
+import { Form, Button, StyledH1, ButtonsContainer } from "./ProjectForm.styles";
 import { ProjectSchema, getDescriptors, getView, routes } from "common";
 
 const descriptors = getDescriptors(ProjectSchema);
@@ -45,62 +45,67 @@ export const ProjectForm = () => {
   }, [history, redirectTo]);
 
   return (
-    <Formik
-      initialValues={{
-        id: "",
-        name: "",
-        number: "",
-        tasks: [],
-      }}
-      validationSchema={ProjectSchema}
-      onSubmit={async (values, { setSubmitting }) => {
-        const promise = values.id
-          ? API.graphql(
-              graphqlOperation(updateProject, {
-                input: { ...values },
-              })
-            )
-          : API.graphql(
-              graphqlOperation(createProject, {
-                input: { ...values, id: uuidv4() },
-              })
-            );
-        try {
-          await promise;
-          setSubmitting(false);
-          setRedirectTo(routes.projects);
-        } catch (err) {
-          console.error(err);
-        }
-      }}
-    >
-      {({ isSubmitting, values }) => (
-        <StyledForm>
-          {
-            <>
-              {view.map((field, index) => (
-                <FieldElement
-                  field={field}
-                  key={index}
-                  payload={values[field.name]}
-                />
-              ))}
-            </>
+    <>
+      <StyledH1>Edit project</StyledH1>
+      <Formik
+        initialValues={{
+          id: "",
+          name: "",
+          number: "",
+          tasks: [],
+        }}
+        validationSchema={ProjectSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          const promise = values.id
+            ? API.graphql(
+                graphqlOperation(updateProject, {
+                  input: { ...values },
+                })
+              )
+            : API.graphql(
+                graphqlOperation(createProject, {
+                  input: { ...values, id: uuidv4() },
+                })
+              );
+          try {
+            await promise;
+            setSubmitting(false);
+            setRedirectTo(routes.projects);
+          } catch (err) {
+            console.error(err);
           }
-          <StyledSubmitButton type="submit" disabled={isSubmitting}>
-            Submit
-          </StyledSubmitButton>
-          <StyledSubmitButton
-            onClick={() => {
-              setRedirectTo(routes.projects);
-            }}
-            disabled={isSubmitting}
-          >
-            Cancel
-          </StyledSubmitButton>
-          <ProjectFetcher />
-        </StyledForm>
-      )}
-    </Formik>
+        }}
+      >
+        {({ isSubmitting, values }) => (
+          <Form>
+            {
+              <>
+                {view.map((field, index) => (
+                  <FieldElement
+                    field={field}
+                    key={index}
+                    payload={values[field.name]}
+                  />
+                ))}
+              </>
+            }
+            <ButtonsContainer>
+              <Button type="submit" disabled={isSubmitting}>
+                Submit
+              </Button>
+              <Button
+                onClick={() => {
+                  setRedirectTo(routes.projects);
+                }}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </Button>
+            </ButtonsContainer>
+            <ProjectFetcher />
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };

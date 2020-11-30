@@ -25,7 +25,7 @@ export const ProjectSchema = Yup.object().shape({
     .required("Required")
     .meta({
       title: "Project name",
-      view: { default: { order: 1, width: "10em" } },
+      view: { default: { order: 1, width: "30em" } },
     }),
   number: Yup.string()
     .min(2, "Too Short!")

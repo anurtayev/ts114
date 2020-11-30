@@ -3,10 +3,13 @@ import { API, graphqlOperation } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-import { Container, StyledSpan } from "./ProjectRow.styles";
-import { ReactComponent as EditIcon } from "./edit.svg";
-import { ReactComponent as CopyIcon } from "./copy.svg";
-import { ReactComponent as DeleteIcon } from "./delete.svg";
+import {
+  Container,
+  StyledSpan,
+  EditIcon,
+  DeleteIcon,
+  CopyIcon,
+} from "./ProjectRow.styles";
 import { routes } from "common";
 import { deleteProject, createProject } from "graphql/mutations";
 
