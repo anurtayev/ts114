@@ -85,7 +85,7 @@ export const RecordSchema = Yup.object().shape({
   projectTask: Yup.string()
     .required("Required")
     .meta({
-      views: { default: { title: "Task", order: 2, width: "20em" } },
+      views: { accounting: { title: "Task", order: 2, width: "20em" } },
       options: async () => {
         if (!selectedProject) return;
         try {
@@ -104,25 +104,25 @@ export const RecordSchema = Yup.object().shape({
     .required()
     .meta({
       title: "Date",
-      views: { default: { order: 3, width: "30em" } },
+      views: { accounting: { order: 3, width: "30em" } },
     }),
   hours: Yup.number()
     .required()
     .meta({
       title: "Hours",
-      views: { default: { order: 3, width: "30em" } },
+      views: { accounting: { order: 3, width: "30em" } },
     }),
   description: Yup.string()
     .required()
     .meta({
       title: "Description",
-      views: { default: { order: 3, width: "30em" } },
+      views: { accounting: { order: 3, width: "30em" } },
     }),
   userId: Yup.string()
     .required()
     .meta({
       title: "UserId",
-      views: { default: { order: 3, width: "30em" } },
+      views: { accounting: { order: 3, width: "30em" } },
     }),
 });
 

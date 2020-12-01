@@ -8,10 +8,9 @@ import { getProject } from "graphql/queries";
 import { createProject, updateProject } from "graphql/mutations";
 import { FieldElement } from "./FieldElement";
 import { Form, Button, StyledH1, ButtonsContainer } from "./ProjectForm.styles";
-import { ProjectSchema, getDescriptors, getView, routes } from "common";
+import { ProjectSchema, getView, routes } from "common";
 
-const descriptors = getDescriptors(ProjectSchema);
-const view = getView({ descriptors });
+const view = getView({ schema: ProjectSchema });
 
 const ProjectFetcher = () => {
   let { setFieldValue } = useFormikContext();

@@ -3,11 +3,10 @@ import { API, graphqlOperation } from "aws-amplify";
 
 import { listProjects } from "graphql/queries";
 import { Container } from "./ProjectsScreen.styles";
-import { ProjectSchema, getDescriptors, getView } from "common";
+import { ProjectSchema, getView } from "common";
 import { ProjectRow } from "./ProjectRow";
 
-const descriptors = getDescriptors(ProjectSchema);
-const view = getView({ descriptors });
+const view = getView({ schema: ProjectSchema });
 
 export const ProjectsScreen = () => {
   const [projects, setProjects] = useState([]);

@@ -24,7 +24,18 @@ export const NavBar = (props) => {
         </Route>
         <Route path={routes.projects}>
           <StyledRouterLink to={routes.accounting}>Accounting</StyledRouterLink>
-          <StyledRouterLink to={routes.projects}>New project</StyledRouterLink>
+          <StyledRouterLink
+            to={`${
+              routes.editForm
+            }?formType=project&view=default&setCallbackURI=${encodeURI(
+              routes.projects
+            )}`}
+          >
+            New project
+          </StyledRouterLink>
+        </Route>
+        <Route path={routes.accounting}>
+          <StyledRouterLink to={routes.projects}>Projects</StyledRouterLink>
         </Route>
       </Switch>
 

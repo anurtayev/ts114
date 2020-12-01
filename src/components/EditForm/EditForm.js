@@ -15,7 +15,7 @@ export const EditForm = () => {
   const history = useHistory();
   const [redirectTo, setRedirectTo] = useState();
 
-  const [callbackPath, setCallbackPath] = useState();
+  const [callbackURI, setCallbackURI] = useState();
   const [view, setView] = useState();
   const [formObject, setFormObject] = useState();
 
@@ -28,7 +28,8 @@ export const EditForm = () => {
         view: params.get("view"),
       });
       setView(view);
-      setCallbackPath(params.get("callbackPath"));
+      setCallbackURI(params.get("callbackURI"));
+      console.log("==> obj", params.get("formObject"));
       setFormObject(params.get("formObject"));
     }
   }, [search]);
@@ -63,9 +64,11 @@ export const EditForm = () => {
           try {
             await promise;
             setSubmitting(false);
-            setRedirectTo(callbackPath);
+            setRedirectTo(callbackURI);
           } catch (err) {
+            console.log("==> 1");
             console.error(err);
+            console.error(err.stack);
           }
         }}
       >
@@ -88,7 +91,7 @@ export const EditForm = () => {
               </Button>
               <Button
                 onClick={() => {
-                  setRedirectTo(callbackPath);
+                  setRedirectTo(callbackURI);
                 }}
                 disabled={isSubmitting}
               >
