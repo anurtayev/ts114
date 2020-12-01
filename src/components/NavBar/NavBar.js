@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Switch, Route } from "react-router-dom";
 
 import {
   NavBarContainer,
@@ -6,7 +7,7 @@ import {
   StyledRouterLink,
   AmplifySignOutStyled,
 } from "./NavBar.styles";
-import { GlobalContext, routes, isAdmin } from "common";
+import { GlobalContext, routes } from "common";
 
 export const NavBar = (props) => {
   const { user } = useContext(GlobalContext);
@@ -17,15 +18,15 @@ export const NavBar = (props) => {
     <NavBarContainer>
       <Banner>{user.signInUserSession.idToken.payload.email}</Banner>
 
-      {isAdmin(user) && (
-        <>
+      <Switch>
+        <Route path={routes.projectForm}>
           <StyledRouterLink to={routes.accounting}>Accounting</StyledRouterLink>
-          <StyledRouterLink to={routes.projects}>Projects</StyledRouterLink>
-          <StyledRouterLink to={routes.projectForm}>
-            New project
-          </StyledRouterLink>
-        </>
-      )}
+        </Route>
+        <Route path={routes.projects}>
+          <StyledRouterLink to={routes.accounting}>Accounting</StyledRouterLink>
+          <StyledRouterLink to={routes.projects}>New project</StyledRouterLink>
+        </Route>
+      </Switch>
 
       <AmplifySignOutStyled />
     </NavBarContainer>

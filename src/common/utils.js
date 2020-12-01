@@ -5,6 +5,7 @@ export const routes = {
   timesheets: "/timesheets",
   projects: "/projects",
   projectForm: "/project-form",
+  editForm: "/edit-form",
 };
 
 export const securityGroups = {
@@ -12,9 +13,10 @@ export const securityGroups = {
   users: "Users",
 };
 
-export const defaultRoutes = {};
-defaultRoutes[securityGroups.administrators] = routes.projects;
-defaultRoutes[securityGroups.users] = routes.timesheets;
+export const defaultRoutes = {
+  [securityGroups.administrators]: routes.accounting,
+  [securityGroups.users]: routes.timesheets,
+};
 
 export const GlobalContext = createContext();
 

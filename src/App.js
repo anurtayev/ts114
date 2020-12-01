@@ -7,11 +7,11 @@ import {
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Switch, Route, useHistory } from "react-router-dom";
 
-import { GlobalContext, getDefaultRoute, routes } from "common";
-import { AccountingScreen } from "components/AccountingScreen";
+import { GlobalContext, getDefaultRoute, routes, RecordSchema } from "common";
+import { RecordsScreen } from "components/RecordsScreen";
 import { ProjectForm } from "components/ProjectForm";
 import { ProjectsScreen } from "components/ProjectsScreen";
-import { TimesheetScreen } from "components/TimesheetScreen";
+import { EditForm } from "components/EditForm";
 import { NavBar } from "components/NavBar";
 
 export const App = () => {
@@ -38,10 +38,10 @@ export const App = () => {
       <NavBar />
       <Switch>
         <Route exact path={routes.accounting}>
-          <AccountingScreen />
+          <RecordsScreen viewName="accounting" />
         </Route>
         <Route path={routes.timesheets}>
-          <TimesheetScreen />
+          <RecordsScreen viewName="timesheets" />
         </Route>
         <Route path={routes.projects}>
           <ProjectsScreen />
@@ -51,6 +51,9 @@ export const App = () => {
         </Route>
         <Route path={routes.projectForm}>
           <ProjectForm />
+        </Route>
+        <Route path={`${routes.editForm}}`}>
+          <EditForm />
         </Route>
       </Switch>
     </GlobalContext.Provider>

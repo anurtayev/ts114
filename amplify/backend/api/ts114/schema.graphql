@@ -9,7 +9,6 @@ type Record @model {
   id: ID!
   project: Project! @connection
   projectTask: String!
-
   date: AWSDateTime!
   hours: Float!
   description: String!
