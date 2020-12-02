@@ -1,26 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { useHistory } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 
-import {
-  Container,
-  StyledSpan,
-  EditIcon,
-  DeleteIcon,
-  CopyIcon,
-} from "./Row.styles";
+import { Container, StyledSpan, Button } from "./Row.styles";
 import { routes } from "common";
 
-export const Row = ({
-  entry,
-  view,
-  isEvenRow,
-  getOp,
-  deleteOp,
-  updateOp,
-  createOp,
-}) => {
+export const Row = ({ entry, meta: { fields, deleteOp }, isEvenRow }) => {
   const history = useHistory();
   const [redirectTo, setRedirectTo] = useState();
 
@@ -30,12 +15,8 @@ export const Row = ({
 
   return (
     <Container isEvenRow={isEvenRow}>
-      <EditIcon
-        onClick={() => {
-          setRedirectTo(`${routes.projectForm}/${entry.id}`);
-        }}
-      />
-      <DeleteIcon
+      <Button
+        title="Delete"
         onClick={async () => {
           try {
             await API.graphql(
@@ -46,28 +27,39 @@ export const Row = ({
             console.error(error);
           }
         }}
-      />
-      <CopyIcon
+      >
+        &times;
+      </Button>
+      <Button
+        title="Copy"
         onClick={async () => {
-          const newProject = {
-            id: uuidv4(),
-            name: entry.name + " Copy",
-            number: entry.number,
-            tasks: entry.tasks,
-          };
-
-          try {
-            await API.graphql(
-              graphqlOperation(createOp, { input: newProject })
-            );
-            setRedirectTo(`${routes.projectForm}/${newProject.id}`);
-          } catch (error) {
-            console.error(error);
-          }
+          setRedirectTo(
+            `${
+              routes.editForm
+            }?entityType=project&view=default&callbackURI=${btoa(
+              routes.projects
+            )}&formObject=${btoa(JSON.stringify({ ...entry, id: "" }))}`
+          );
         }}
-      />
-      {view.map((field, index) => (
-        <StyledSpan key={index} width={field.width}>
+      >
+        &#x2398;
+      </Button>
+      <Button
+        title="Edit"
+        onClick={async () => {
+          setRedirectTo(
+            `${
+              routes.editForm
+            }?entityType=project&view=default&callbackURI=${btoa(
+              routes.projects
+            )}&formObject=${btoa(JSON.stringify(entry))}`
+          );
+        }}
+      >
+        &#x270D;
+      </Button>
+      {fields.map((field, index) => (
+        <StyledSpan key={index} width={field.view.width}>
           {entry[field.name]}
         </StyledSpan>
       ))}

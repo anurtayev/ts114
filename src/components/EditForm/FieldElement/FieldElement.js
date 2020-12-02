@@ -9,7 +9,7 @@ import {
 
 export const FieldElement = ({ field, payload }) => (
   <FieldContainer>
-    <StyledLabel htmlFor={field.name}>{field.title}</StyledLabel>
+    <StyledLabel htmlFor={field.name}>{field.view.title}</StyledLabel>
     {field.type === "array" ? (
       <FieldArray
         name={field.name}

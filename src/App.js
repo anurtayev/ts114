@@ -7,9 +7,8 @@ import {
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Switch, Route, useHistory } from "react-router-dom";
 
-import { GlobalContext, getDefaultRoute, routes, RecordSchema } from "common";
+import { GlobalContext, getDefaultRoute, routes } from "common";
 import { RecordsScreen } from "components/RecordsScreen";
-import { ProjectForm } from "components/ProjectForm";
 import { ProjectsScreen } from "components/ProjectsScreen";
 import { EditForm } from "components/EditForm";
 import { NavBar } from "components/NavBar";
@@ -33,26 +32,20 @@ export const App = () => {
       history.push(getDefaultRoute(user));
   }, [history, user]);
 
-  return authState === AuthState.SignedIn && user ? (
+  return authState === AuthState.SignedIn && user && user.signInUserSession ? (
     <GlobalContext.Provider value={{ user }}>
       <NavBar />
       <Switch>
         <Route exact path={routes.accounting}>
-          <RecordsScreen viewName="accounting" />
+          <RecordsScreen view="accounting" />
         </Route>
         <Route path={routes.timesheets}>
-          <RecordsScreen viewName="timesheets" />
+          <RecordsScreen view="timesheets" />
         </Route>
         <Route path={routes.projects}>
           <ProjectsScreen />
         </Route>
-        <Route path={`${routes.projectForm}/:id`}>
-          <ProjectForm />
-        </Route>
-        <Route path={routes.projectForm}>
-          <ProjectForm />
-        </Route>
-        <Route path={`${routes.editForm}}`}>
+        <Route path={routes.editForm}>
           <EditForm />
         </Route>
       </Switch>

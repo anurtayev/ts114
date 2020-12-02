@@ -1,30 +1,26 @@
-import * as Yup from "yup";
-import { listProjects, getProject } from "graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
+import * as Yup from "yup";
 
-export const getView = ({ schema, view = "default" }) => {
-  const { fields } = schema.describe();
-  return Reflect.ownKeys(fields)
-    .map((field) => ({
-      name: field,
-      view: fields[field].meta.views[view],
-      type: fields[field].type,
-    }))
-    .sort((a, b) => {
-      const orderA = a.view.order;
-      const orderB = b.view.order;
-      if (orderA < orderB) return -1;
-      else if (orderA > orderB) return 1;
-      else return 0;
-    });
-};
+import {
+  listProjects,
+  getProject,
+  listRecords,
+  getRecord,
+} from "graphql/queries";
+import {
+  createProject,
+  updateProject,
+  deleteProject,
+  createRecord,
+  deleteRecord,
+  updateRecord,
+} from "graphql/mutations";
 
 export const ProjectSchema = Yup.object().shape({
   name: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
     .required("Required")
     .meta({
+      input: true,
       views: {
         default: {
           title: "Project name",
@@ -34,19 +30,19 @@ export const ProjectSchema = Yup.object().shape({
       },
     }),
   number: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
     .required("Required")
     .meta({
+      input: true,
       views: {
         default: { title: "Project number", order: 2, width: "20em" },
       },
     }),
   tasks: Yup.array()
-    .of(Yup.string().min(1).required())
+    .of(Yup.string().required())
     .min(1)
     .required()
     .meta({
+      input: true,
       views: { default: { title: "Project tasks", order: 3, width: "30em" } },
     }),
 });
@@ -126,16 +122,30 @@ export const RecordSchema = Yup.object().shape({
     }),
 });
 
-/**
- *         <TableHeaderColumn style={{width: '1rem'}}>Date</TableHeaderColumn>
-        <TableHeaderColumn style={{width: '2rem'}}>Project#</TableHeaderColumn>
-        <TableHeaderColumn style={{width: '8rem'}}>Task</TableHeaderColumn>
-        <TableHeaderColumn style={{width: '1rem'}}>Hours</TableHeaderColumn>
-        <TableHeaderColumn style={{width: '5rem'}}>Description</TableHeaderColumn>
-        <TableHeaderColumn style={{width: '2rem'}}>User</TableHeaderColumn>
-
- */
-
-/**
- *
- */
+export const getMeta = ({ entityType, view = "default" }) => {
+  const schema = entityType === "project" ? ProjectSchema : RecordSchema;
+  const { fields } = schema.describe();
+  return {
+    fields: Reflect.ownKeys(fields)
+      .map((field) => ({
+        name: field,
+        view: fields[field].meta.views && fields[field].meta.views[view],
+        type: fields[field].type,
+        input: fields[field].meta.input,
+      }))
+      .sort((a, b) => {
+        const orderA = a.view.order;
+        const orderB = b.view.order;
+        if (orderA < orderB) return -1;
+        else if (orderA > orderB) return 1;
+        else return 0;
+      }),
+    getOp: entityType === "project" ? getProject : getRecord,
+    listOp: entityType === "project" ? listProjects : listRecords,
+    createOp: entityType === "project" ? createProject : createRecord,
+    updateOp: entityType === "project" ? updateProject : updateRecord,
+    deleteOp: entityType === "project" ? deleteProject : deleteRecord,
+    schema,
+    entityType,
+  };
+};

@@ -27,8 +27,10 @@ export const NavBar = (props) => {
           <StyledRouterLink
             to={`${
               routes.editForm
-            }?formType=project&view=default&setCallbackURI=${encodeURI(
+            }?entityType=project&view=default&callbackURI=${btoa(
               routes.projects
+            )}&formObject=${btoa(
+              JSON.stringify({ id: "", name: "", number: "", tasks: [] })
             )}`}
           >
             New project
