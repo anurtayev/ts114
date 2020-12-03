@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 export const routes = {
   accounting: "/accounting",
@@ -31,3 +31,11 @@ export const getDefaultRoute = (user) =>
   isAdmin(user)
     ? defaultRoutes[securityGroups.administrators]
     : defaultRoutes[securityGroups.users];
+
+export function useForceUpdate() {
+  let [updateValue, setValue] = useState(0);
+  return {
+    updateValue,
+    forceUpdate: () => setValue((updateValue) => ++updateValue),
+  };
+}

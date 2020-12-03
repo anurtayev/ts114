@@ -75,13 +75,16 @@ export const EditForm = () => {
             <Form>
               {
                 <>
-                  {fields.map((field, index) => (
-                    <FieldElement
-                      field={field}
-                      key={index}
-                      payload={values[field.name]}
-                    />
-                  ))}
+                  {fields.map(
+                    (field, index) =>
+                      field.view && (
+                        <FieldElement
+                          field={field}
+                          key={index}
+                          payload={values[field.name]}
+                        />
+                      )
+                  )}
                 </>
               }
               <ButtonsContainer>

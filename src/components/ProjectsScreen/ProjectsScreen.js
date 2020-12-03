@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 
-import { getMeta } from "common";
+import { getMeta, useForceUpdate } from "common";
 import { Browser } from "components/Browser";
 
 const meta = getMeta({ entityType: "project" });
@@ -9,8 +9,10 @@ const meta = getMeta({ entityType: "project" });
 export const ProjectsScreen = () => {
   console.log("==> ProjectsScreen");
   const [projects, setProjects] = useState([]);
+  let { updateValue, forceUpdate } = useForceUpdate();
 
   useEffect(() => {
+    console.log("==> ProjectsScreen useEffect");
     const promise = API.graphql(graphqlOperation(meta.listOp));
     promise
       .then(
@@ -30,7 +32,7 @@ export const ProjectsScreen = () => {
     return () => {
       API.cancel(promise, "API request has been canceled");
     };
-  }, []);
+  }, [updateValue]);
 
-  return <Browser entries={projects} meta={meta} />;
+  return <Browser entries={projects} meta={meta} forceUpdate={forceUpdate} />;
 };

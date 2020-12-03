@@ -38,9 +38,8 @@ export const ProjectSchema = Yup.object().shape({
       },
     }),
   tasks: Yup.array()
-    .of(Yup.string().required())
-    .min(1)
     .required()
+    .min(1, "need elems")
     .meta({
       input: true,
       views: { default: { title: "Project tasks", order: 3, width: "30em" } },

@@ -5,7 +5,12 @@ import { useHistory } from "react-router-dom";
 import { Container, StyledSpan, Button } from "./Row.styles";
 import { routes } from "common";
 
-export const Row = ({ entry, meta: { fields, deleteOp }, isEvenRow }) => {
+export const Row = ({
+  entry,
+  meta: { fields, deleteOp },
+  isEvenRow,
+  forceUpdate,
+}) => {
   const history = useHistory();
   const [redirectTo, setRedirectTo] = useState();
 
@@ -22,7 +27,7 @@ export const Row = ({ entry, meta: { fields, deleteOp }, isEvenRow }) => {
             await API.graphql(
               graphqlOperation(deleteOp, { input: { id: entry.id } })
             );
-            history.go(0);
+            forceUpdate();
           } catch (error) {
             console.error(error);
           }
