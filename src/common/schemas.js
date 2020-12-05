@@ -24,11 +24,14 @@ export const ProjectSchema = Yup.object().shape({
     .required("Required")
     .meta({
       input: true,
+      title: "Project name",
       views: {
         default: {
-          title: "Project name",
           order: 1,
           width: "30em",
+        },
+        edit: {
+          order: 1,
         },
       },
     }),
@@ -36,8 +39,12 @@ export const ProjectSchema = Yup.object().shape({
     .required("Required")
     .meta({
       input: true,
+      title: "Project number",
       views: {
-        default: { title: "Project number", order: 2, width: "20em" },
+        default: { order: 2, width: "20em" },
+        edit: {
+          order: 2,
+        },
       },
     }),
   tasks: Yup.array()
@@ -45,7 +52,13 @@ export const ProjectSchema = Yup.object().shape({
     .min(1, "need elems")
     .meta({
       input: true,
-      views: { default: { title: "Project tasks", order: 3, width: "30em" } },
+      title: "Project tasks",
+      views: {
+        edit: {
+          order: 3,
+        },
+        default: { order: 3, width: "30em" },
+      },
     }),
 });
 
@@ -70,7 +83,7 @@ export const RecordSchema = Yup.object().shape({
   id: Yup.string().meta({
     input: true,
   }),
-  project: Yup.string()
+  recordProjectId: Yup.string()
     .required("Required")
     .meta({
       input: true,
@@ -107,12 +120,12 @@ export const RecordSchema = Yup.object().shape({
     }),
   "project.number": Yup.string().meta({
     views: {
-      timesheets: { order: 3, width: "3em" },
+      timesheets: { order: 3, width: "5em" },
       accounting: { title: "Project", order: 1, width: "30em" },
     },
   }),
   "project.name": Yup.string().meta({
-    views: { timesheets: { order: 4, width: "3em" } },
+    views: { timesheets: { order: 4, width: "15em" } },
   }),
   projectTask: Yup.string()
     .required()
@@ -121,7 +134,7 @@ export const RecordSchema = Yup.object().shape({
       title: "Project Task",
       views: {
         edit: { order: 2 },
-        timesheets: { order: 5, width: "3em" },
+        timesheets: { order: 5, width: "15em" },
         accounting: { title: "Task", order: 2, width: "20em" },
       },
       options: projectSelectedEventTarget,
@@ -134,7 +147,7 @@ export const RecordSchema = Yup.object().shape({
       views: {
         edit: { order: 3, type: "date" },
         accounting: { order: 0.5, width: "30em" },
-        timesheets: { order: 2, width: "3em" },
+        timesheets: { order: 2, width: "7em" },
       },
     }),
   hours: Yup.number()
@@ -145,7 +158,7 @@ export const RecordSchema = Yup.object().shape({
       views: {
         edit: { order: 4 },
         timesheets: { order: 6, width: "3em" },
-        accounting: { order: 3, width: "30em" },
+        accounting: { order: 3, width: "3em" },
       },
     }),
   description: Yup.string()
@@ -155,13 +168,14 @@ export const RecordSchema = Yup.object().shape({
       title: "Description",
       views: {
         edit: { order: 5 },
-        timesheets: { order: 7, width: "3em" },
+        timesheets: { order: 7, width: "30em" },
         accounting: { order: 4, width: "30em" },
       },
     }),
   userId: Yup.string()
     .required()
     .meta({
+      input: true,
       title: "UserId",
       views: { accounting: { order: 5, width: "30em" } },
     }),
@@ -177,7 +191,7 @@ export const RecordSchema = Yup.object().shape({
     .meta({
       input: true,
       title: "Submitted",
-      views: { timesheets: { order: 1, width: "3em" } },
+      views: { timesheets: { order: 1, width: "4em" } },
     }),
 });
 

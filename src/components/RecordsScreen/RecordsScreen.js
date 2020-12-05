@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 
-import { getMeta } from "common";
+import { getMeta, useForceUpdate } from "common";
 import { Browser } from "components/Browser";
+import { LoadingScreen } from "components/LoadingScreen";
 
-export const RecordsScreen = ({ view }) => {
+export const RecordsScreen = ({ view, editFormReturnUrl }) => {
+  let { updateValue, forceUpdate } = useForceUpdate();
+  const [records, setRecords] = useState();
+
   const meta = useMemo(
     () =>
       getMeta({
@@ -13,7 +17,6 @@ export const RecordsScreen = ({ view }) => {
       }),
     [view]
   );
-  const [records, setRecords] = useState([]);
 
   useEffect(() => {
     const promise = API.graphql(graphqlOperation(meta.listOp));
@@ -31,7 +34,16 @@ export const RecordsScreen = ({ view }) => {
     return () => {
       API.cancel(promise, "API request has been canceled");
     };
-  }, [meta]);
+  }, [meta, updateValue]);
 
-  return <Browser entries={records} meta={meta} />;
+  return records ? (
+    <Browser
+      entries={records}
+      meta={meta}
+      forceUpdate={forceUpdate}
+      editFormReturnUrl={editFormReturnUrl}
+    />
+  ) : (
+    <LoadingScreen />
+  );
 };

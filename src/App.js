@@ -37,10 +37,16 @@ export const App = () => {
       <NavBar />
       <Switch>
         <Route exact path={routes.accounting}>
-          <RecordsScreen view="accounting" />
+          <RecordsScreen
+            view="accounting"
+            editFormReturnUrl={routes.accounting}
+          />
         </Route>
         <Route path={routes.timesheets}>
-          <RecordsScreen view="timesheets" />
+          <RecordsScreen
+            view="timesheets"
+            editFormReturnUrl={routes.timesheets}
+          />
         </Route>
         <Route path={routes.projects}>
           <ProjectsScreen />

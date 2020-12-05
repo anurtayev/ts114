@@ -5,11 +5,19 @@ import { useHistory } from "react-router-dom";
 import { Container, StyledSpan, Button } from "./Row.styles";
 import { routes } from "common";
 
+const getFieldValue = ({ entry, path }) =>
+  path.includes(".")
+    ? path
+        .split(".")
+        .reduce((accumulator, current) => accumulator[current], entry)
+    : entry[path];
+
 export const Row = ({
   entry,
-  meta: { fields, deleteOp },
+  meta: { fields, deleteOp, entityType },
   isEvenRow,
   forceUpdate,
+  editFormReturnUrl,
 }) => {
   const history = useHistory();
   const [redirectTo, setRedirectTo] = useState();
@@ -39,10 +47,8 @@ export const Row = ({
         title="Copy"
         onClick={async () => {
           setRedirectTo(
-            `${
-              routes.editForm
-            }?entityType=project&view=default&callbackURI=${btoa(
-              routes.projects
+            `${routes.editForm}?entityType=${entityType}&callbackURI=${btoa(
+              editFormReturnUrl
             )}&formObject=${btoa(JSON.stringify({ ...entry, id: "" }))}`
           );
         }}
@@ -53,21 +59,22 @@ export const Row = ({
         title="Edit"
         onClick={async () => {
           setRedirectTo(
-            `${
-              routes.editForm
-            }?entityType=project&view=default&callbackURI=${btoa(
-              routes.projects
+            `${routes.editForm}?entityType=${entityType}&callbackURI=${btoa(
+              editFormReturnUrl
             )}&formObject=${btoa(JSON.stringify(entry))}`
           );
         }}
       >
         &#x270D;
       </Button>
-      {fields.map((field, index) => (
-        <StyledSpan key={index} width={field.view.width}>
-          {entry[field.name]}
-        </StyledSpan>
-      ))}
+      {fields.map(
+        (field, index) =>
+          field.view && (
+            <StyledSpan key={index} width={field.view.width}>
+              {String(getFieldValue({ entry, path: field.name }))}
+            </StyledSpan>
+          )
+      )}
     </Container>
   );
 };

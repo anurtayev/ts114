@@ -46,10 +46,12 @@ const getFieldComponent = ({ field, payload, options, setFieldValue }) => {
       <Field
         as="select"
         name={field.name}
-        onInput={(event) => {
-          console.log("==> event.target.value", event.target.value);
-          field.selectedValueCallback(event.target.value);
-        }}
+        onInput={
+          field.selectedValueCallback &&
+          ((event) => {
+            field.selectedValueCallback(event.target.value);
+          })
+        }
       >
         {options.map((option) => (
           <option value={option[0]} key={option[0]}>

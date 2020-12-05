@@ -3,11 +3,12 @@ import { API, graphqlOperation } from "aws-amplify";
 
 import { getMeta, useForceUpdate } from "common";
 import { Browser } from "components/Browser";
+import { LoadingScreen } from "components/LoadingScreen";
 
 const meta = getMeta({ entityType: "project" });
 
 export const ProjectsScreen = () => {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState();
   let { updateValue, forceUpdate } = useForceUpdate();
 
   useEffect(() => {
@@ -32,5 +33,9 @@ export const ProjectsScreen = () => {
     };
   }, [updateValue]);
 
-  return <Browser entries={projects} meta={meta} forceUpdate={forceUpdate} />;
+  return projects ? (
+    <Browser entries={projects} meta={meta} forceUpdate={forceUpdate} />
+  ) : (
+    <LoadingScreen />
+  );
 };

@@ -33,9 +33,7 @@ export const NavBar = (props) => {
         <Route path={routes.projects}>
           <StyledRouterLink to={routes.accounting}>Accounting</StyledRouterLink>
           <StyledRouterLink
-            to={`${
-              routes.editForm
-            }?entityType=project&view=default&callbackURI=${btoa(
+            to={`${routes.editForm}?entityType=project&isNew&callbackURI=${btoa(
               routes.projects
             )}&formObject=${btoa(
               JSON.stringify({ id: uuidv4(), name: "", number: "", tasks: [] })
@@ -49,14 +47,12 @@ export const NavBar = (props) => {
         </Route>
         <Route path={routes.timesheets}>
           <StyledRouterLink
-            to={`${
-              routes.editForm
-            }?entityType=record&view=edit&callbackURI=${btoa(
+            to={`${routes.editForm}?entityType=record&isNew&callbackURI=${btoa(
               routes.timesheets
             )}&formObject=${btoa(
               JSON.stringify({
                 id: uuidv4(),
-                project: "",
+                recordProjectId: "",
                 projectTask: "",
                 date: "",
                 hours: 0,

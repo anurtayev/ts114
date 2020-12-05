@@ -7,6 +7,17 @@ import { FieldElement } from "./FieldElement";
 import { Form, Button, StyledH1, ButtonsContainer } from "./EditForm.styles";
 import { getMeta } from "common";
 
+const coerceType = ({ field, value }) => {
+  switch (field.type) {
+    case "date":
+      return new Date(value).toISOString();
+    case "number":
+      return Number(value);
+    default:
+      return value;
+  }
+};
+
 export const EditForm = () => {
   const { search } = useLocation();
   const history = useHistory();
@@ -17,6 +28,7 @@ export const EditForm = () => {
   const [formObject, setFormObject] = useState();
   const [entityType, setEntityType] = useState();
   const [params, setParams] = useState();
+  const [isNew, setIsNew] = useState();
 
   useEffect(() => {
     if (search) {
@@ -29,10 +41,11 @@ export const EditForm = () => {
       setMeta(
         getMeta({
           entityType: params.get("entityType"),
-          view: params.get("view"),
+          view: "edit",
         })
       );
       setEntityType(params.get("entityType"));
+      setIsNew(params.get("isNew") === null ? false : true);
       setCallbackURI(atob(params.get("callbackURI")));
       setFormObject(JSON.parse(atob(params.get("formObject"))));
     }
@@ -46,10 +59,6 @@ export const EditForm = () => {
     return null;
   } else {
     const { updateOp, createOp, fields } = meta;
-    console.log("==> callbackURI", callbackURI);
-    console.log("==> meta", meta);
-    console.log("==> formObject", formObject);
-    console.log("==> entityType", entityType);
     return (
       <>
         <StyledH1>Edit {entityType}</StyledH1>
@@ -57,13 +66,15 @@ export const EditForm = () => {
           initialValues={formObject}
           validationSchema={meta.schema}
           onSubmit={(values, { setSubmitting }) => {
-            console.log("==> submit form");
             API.graphql(
-              graphqlOperation(values.id ? updateOp : createOp, {
+              graphqlOperation(isNew ? createOp : updateOp, {
                 input: {
                   ...fields.reduce((accumulator, current) => {
                     if (current.input) {
-                      accumulator[current.name] = values[current.name];
+                      accumulator[current.name] = coerceType({
+                        field: current,
+                        value: values[current.name],
+                      });
                     }
                     return accumulator;
                   }, {}),
@@ -81,7 +92,6 @@ export const EditForm = () => {
             <Form>
               {
                 <>
-                  <p>{JSON.stringify(errors)}</p>
                   {fields.map(
                     (field, index) =>
                       field.view && (
@@ -97,7 +107,7 @@ export const EditForm = () => {
               }
               <ButtonsContainer>
                 <Button type="submit" disabled={isSubmitting}>
-                  Submit
+                  Save
                 </Button>
                 <Button
                   onClick={() => {
