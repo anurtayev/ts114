@@ -5,7 +5,6 @@ import { getMeta } from "common";
 import { Browser } from "components/Browser";
 
 export const RecordsScreen = ({ view }) => {
-  console.log("==> RecordsScreen");
   const meta = useMemo(
     () =>
       getMeta({

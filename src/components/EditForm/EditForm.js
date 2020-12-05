@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { Formik } from "formik";
-import { v4 as uuidv4 } from "uuid";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { FieldElement } from "./FieldElement";
@@ -9,7 +8,6 @@ import { Form, Button, StyledH1, ButtonsContainer } from "./EditForm.styles";
 import { getMeta } from "common";
 
 export const EditForm = () => {
-  console.log("==> EditForm");
   const { search } = useLocation();
   const history = useHistory();
   const [redirectTo, setRedirectTo] = useState();
@@ -17,40 +15,49 @@ export const EditForm = () => {
   const [callbackURI, setCallbackURI] = useState();
   const [meta, setMeta] = useState();
   const [formObject, setFormObject] = useState();
+  const [entityType, setEntityType] = useState();
+  const [params, setParams] = useState();
 
   useEffect(() => {
-    console.log("==> search", search);
     if (search) {
-      const params = new URLSearchParams(search);
+      setParams(new URLSearchParams(search));
+    }
+  }, [search]);
+
+  useEffect(() => {
+    if (params) {
       setMeta(
         getMeta({
           entityType: params.get("entityType"),
           view: params.get("view"),
         })
       );
+      setEntityType(params.get("entityType"));
       setCallbackURI(atob(params.get("callbackURI")));
       setFormObject(JSON.parse(atob(params.get("formObject"))));
     }
-  }, [search]);
+  }, [params]);
 
   useEffect(() => {
     redirectTo && history.push(redirectTo);
   }, [history, redirectTo]);
 
-  console.log("==> meta", meta);
-  console.log("==> callbackURI", callbackURI);
-  console.log("==> formObject", formObject);
   if (!meta) {
     return null;
   } else {
     const { updateOp, createOp, fields } = meta;
+    console.log("==> callbackURI", callbackURI);
+    console.log("==> meta", meta);
+    console.log("==> formObject", formObject);
+    console.log("==> entityType", entityType);
     return (
       <>
-        <StyledH1>Edit project</StyledH1>
+        <StyledH1>Edit {entityType}</StyledH1>
         <Formik
           initialValues={formObject}
           validationSchema={meta.schema}
-          onSubmit={(values, { setSubmitting }) =>
+          onSubmit={(values, { setSubmitting }) => {
+            console.log("==> submit form");
             API.graphql(
               graphqlOperation(values.id ? updateOp : createOp, {
                 input: {
@@ -60,7 +67,6 @@ export const EditForm = () => {
                     }
                     return accumulator;
                   }, {}),
-                  id: values.id ? values.id : uuidv4(),
                 },
               })
             )
@@ -68,13 +74,14 @@ export const EditForm = () => {
                 setSubmitting(false);
                 setRedirectTo(callbackURI);
               })
-              .catch((err) => console.error(err))
-          }
+              .catch((err) => console.error(err));
+          }}
         >
-          {({ isSubmitting, values }) => (
+          {({ isSubmitting, values, setFieldValue, errors }) => (
             <Form>
               {
                 <>
+                  <p>{JSON.stringify(errors)}</p>
                   {fields.map(
                     (field, index) =>
                       field.view && (
@@ -82,6 +89,7 @@ export const EditForm = () => {
                           field={field}
                           key={index}
                           payload={values[field.name]}
+                          setFieldValue={setFieldValue}
                         />
                       )
                   )}

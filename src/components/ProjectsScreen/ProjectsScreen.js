@@ -7,12 +7,10 @@ import { Browser } from "components/Browser";
 const meta = getMeta({ entityType: "project" });
 
 export const ProjectsScreen = () => {
-  console.log("==> ProjectsScreen");
   const [projects, setProjects] = useState([]);
   let { updateValue, forceUpdate } = useForceUpdate();
 
   useEffect(() => {
-    console.log("==> ProjectsScreen useEffect");
     const promise = API.graphql(graphqlOperation(meta.listOp));
     promise
       .then(
