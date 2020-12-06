@@ -6,6 +6,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { FieldElement } from "./FieldElement";
 import { Form, Button, StyledH1, ButtonsContainer } from "./EditForm.styles";
 import { getMeta } from "common";
+import { LoadingScreen } from "components/LoadingScreen";
 
 const coerceType = ({ field, value }) => {
   switch (field.type) {
@@ -56,7 +57,7 @@ export const EditForm = () => {
   }, [history, redirectTo]);
 
   if (!meta) {
-    return null;
+    return <LoadingScreen />;
   } else {
     const { updateOp, createOp, fields } = meta;
     return (

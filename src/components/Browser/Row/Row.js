@@ -18,6 +18,7 @@ export const Row = ({
   isEvenRow,
   forceUpdate,
   editFormReturnUrl,
+  isReadOnly,
 }) => {
   const history = useHistory();
   const [redirectTo, setRedirectTo] = useState();
@@ -28,45 +29,50 @@ export const Row = ({
 
   return (
     <Container isEvenRow={isEvenRow}>
-      <Button
-        title="Delete"
-        onClick={async () => {
-          try {
-            await API.graphql(
-              graphqlOperation(deleteOp, { input: { id: entry.id } })
-            );
-            forceUpdate();
-          } catch (error) {
-            console.error(error);
-          }
-        }}
-      >
-        &times;
-      </Button>
-      <Button
-        title="Copy"
-        onClick={async () => {
-          setRedirectTo(
-            `${routes.editForm}?entityType=${entityType}&callbackURI=${btoa(
-              editFormReturnUrl
-            )}&formObject=${btoa(JSON.stringify({ ...entry, id: "" }))}`
-          );
-        }}
-      >
-        &#x2398;
-      </Button>
-      <Button
-        title="Edit"
-        onClick={async () => {
-          setRedirectTo(
-            `${routes.editForm}?entityType=${entityType}&callbackURI=${btoa(
-              editFormReturnUrl
-            )}&formObject=${btoa(JSON.stringify(entry))}`
-          );
-        }}
-      >
-        &#x270D;
-      </Button>
+      {!isReadOnly && (
+        <>
+          <Button
+            title="Delete"
+            onClick={async () => {
+              try {
+                await API.graphql(
+                  graphqlOperation(deleteOp, { input: { id: entry.id } })
+                );
+                forceUpdate();
+              } catch (error) {
+                console.error(error);
+              }
+            }}
+          >
+            &times;
+          </Button>
+          <Button
+            title="Copy"
+            onClick={async () => {
+              setRedirectTo(
+                `${routes.editForm}?entityType=${entityType}&callbackURI=${btoa(
+                  editFormReturnUrl
+                )}&formObject=${btoa(JSON.stringify({ ...entry, id: "" }))}`
+              );
+            }}
+          >
+            &#x2398;
+          </Button>
+          <Button
+            title="Edit"
+            onClick={async () => {
+              setRedirectTo(
+                `${routes.editForm}?entityType=${entityType}&callbackURI=${btoa(
+                  editFormReturnUrl
+                )}&formObject=${btoa(JSON.stringify(entry))}`
+              );
+            }}
+          >
+            &#x270D;
+          </Button>
+        </>
+      )}
+
       {fields.map(
         (field, index) =>
           field.view && (

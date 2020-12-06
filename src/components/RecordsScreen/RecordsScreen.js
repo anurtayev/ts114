@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 
-import { getMeta, useForceUpdate } from "common";
+import { getMeta, useForceUpdate, isAdmin, GlobalContext } from "common";
 import { Browser } from "components/Browser";
 import { LoadingScreen } from "components/LoadingScreen";
 
 export const RecordsScreen = ({ view, editFormReturnUrl }) => {
   let { updateValue, forceUpdate } = useForceUpdate();
   const [records, setRecords] = useState();
+  const { user } = useContext(GlobalContext);
 
   const meta = useMemo(
     () =>
@@ -36,14 +37,15 @@ export const RecordsScreen = ({ view, editFormReturnUrl }) => {
     };
   }, [meta, updateValue]);
 
-  return records ? (
+  if (!user || !records) return <LoadingScreen />;
+
+  return (
     <Browser
       entries={records}
       meta={meta}
       forceUpdate={forceUpdate}
       editFormReturnUrl={editFormReturnUrl}
+      isReadOnly={isAdmin(user)}
     />
-  ) : (
-    <LoadingScreen />
   );
 };
