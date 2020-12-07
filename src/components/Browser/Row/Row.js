@@ -18,7 +18,6 @@ export const Row = ({
   isEvenRow,
   forceUpdate,
   editFormReturnUrl,
-  isReadOnly,
 }) => {
   const history = useHistory();
   const [redirectTo, setRedirectTo] = useState();
@@ -29,7 +28,7 @@ export const Row = ({
 
   return (
     <Container isEvenRow={isEvenRow}>
-      {!isReadOnly && (
+      {editFormReturnUrl === routes.timesheets && (
         <>
           <Button
             title="Delete"

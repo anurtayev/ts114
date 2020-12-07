@@ -23,7 +23,6 @@ export const EditForm = () => {
   const { search } = useLocation();
   const history = useHistory();
   const [redirectTo, setRedirectTo] = useState();
-
   const [callbackURI, setCallbackURI] = useState();
   const [meta, setMeta] = useState();
   const [formObject, setFormObject] = useState();
@@ -39,12 +38,6 @@ export const EditForm = () => {
 
   useEffect(() => {
     if (params) {
-      setMeta(
-        getMeta({
-          entityType: params.get("entityType"),
-          view: "edit",
-        })
-      );
       setEntityType(params.get("entityType"));
       setIsNew(params.get("isNew") === null ? false : true);
       setCallbackURI(atob(params.get("callbackURI")));
@@ -53,10 +46,19 @@ export const EditForm = () => {
   }, [params]);
 
   useEffect(() => {
+    setMeta(
+      getMeta({
+        entityType: entityType,
+        view: "edit",
+      })
+    );
+  }, [entityType]);
+
+  useEffect(() => {
     redirectTo && history.push(redirectTo);
   }, [history, redirectTo]);
 
-  if (!meta) {
+  if (!meta || !formObject || !entityType) {
     return <LoadingScreen />;
   } else {
     const { updateOp, createOp, fields } = meta;
@@ -89,10 +91,11 @@ export const EditForm = () => {
               .catch((err) => console.error(err));
           }}
         >
-          {({ isSubmitting, values, setFieldValue, errors }) => (
+          {({ isSubmitting, values, errors, setFieldValue }) => (
             <Form>
               {
                 <>
+                  <p>{JSON.stringify(values)}</p>
                   {fields.map(
                     (field, index) =>
                       field.view && (
@@ -100,6 +103,7 @@ export const EditForm = () => {
                           field={field}
                           key={index}
                           payload={values[field.name]}
+                          optionsPromise={field.optionsPromise?.(values)}
                           setFieldValue={setFieldValue}
                         />
                       )

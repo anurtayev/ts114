@@ -7,7 +7,7 @@ import {
   ArrayElementDiv,
 } from "./FieldElement.styles";
 
-const getFieldComponent = ({ field, payload, options, setFieldValue }) => {
+const getFieldComponent = ({ field, payload, options }) => {
   if (field.type === "array") {
     return (
       <FieldArray
@@ -41,25 +41,27 @@ const getFieldComponent = ({ field, payload, options, setFieldValue }) => {
         )}
       />
     );
-  } else if (field.options) {
-    return options ? (
-      <Field
-        as="select"
-        name={field.name}
-        onInput={
-          field.selectedValueCallback &&
-          ((event) => {
-            field.selectedValueCallback(event.target.value);
-          })
-        }
-      >
-        {options.map((option) => (
-          <option value={option[0]} key={option[0]}>
-            {option[1]}
-          </option>
-        ))}
-      </Field>
-    ) : null;
+  } else if (field.optionsPromise) {
+    return (
+      options && (
+        <Field
+          as="select"
+          name={field.name}
+          onInput={
+            field.selectedValueCallback &&
+            ((event) => {
+              field.selectedValueCallback(event.target.value);
+            })
+          }
+        >
+          {options.map((option) => (
+            <option value={option[0]} key={option[0]}>
+              {option[1]}
+            </option>
+          ))}
+        </Field>
+      )
+    );
   } else {
     return (
       <Field
@@ -73,43 +75,29 @@ const getFieldComponent = ({ field, payload, options, setFieldValue }) => {
   }
 };
 
-export const FieldElement = ({ field, payload, setFieldValue }) => {
+export const FieldElement = ({
+  field,
+  payload,
+  optionsPromise,
+  setFieldValue,
+}) => {
   const [options, setOptions] = useState();
 
   useEffect(() => {
-    if (field.options) {
-      if (typeof field.options === "function") {
-        field.options().then((options) => {
-          setOptions(options);
-        });
-      } else if (
-        typeof field.options === "object" &&
-        Array.isArray(field.options)
-      ) {
-        setOptions(field.options);
-      } else if (typeof field.options === "object") {
-        // async options selector
-        field.options.addEventListener(
-          field.options.eventName,
-          ({ detail }) => {
-            field.options.getOptions({
-              selectedValue: detail,
-              setOptions,
-            });
-          }
-        );
-      } else {
-        throw new Error("invalid options");
-      }
-    }
-  }, [field]);
+    optionsPromise &&
+      optionsPromise.then((options) => {
+        setOptions(options);
+        !options.find((element) => element[0] === payload) &&
+          setFieldValue(field.name, options[0][0]);
+      });
+  }, [optionsPromise, field.name, setFieldValue, payload]);
 
   return (
     <FieldContainer>
       <StyledLabel htmlFor={field.name}>
         {field.view.title || field.title}
       </StyledLabel>
-      {getFieldComponent({ field, payload, options, setFieldValue })}
+      {getFieldComponent({ field, payload, options })}
       <ErrorMessage name={field.name} component="div" />
     </FieldContainer>
   );

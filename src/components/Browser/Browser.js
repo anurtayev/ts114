@@ -8,7 +8,6 @@ export const Browser = ({
   meta,
   forceUpdate,
   editFormReturnUrl,
-  isReadOnly,
 }) => (
   <Container>
     {entries.map((entry, index) => (
@@ -19,7 +18,6 @@ export const Browser = ({
         isEvenRow={index % 2 === 0}
         forceUpdate={forceUpdate}
         editFormReturnUrl={editFormReturnUrl}
-        isReadOnly={isReadOnly}
       />
     ))}
   </Container>

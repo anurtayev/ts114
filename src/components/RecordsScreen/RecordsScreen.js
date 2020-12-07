@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useMemo, useContext } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 
-import { getMeta, useForceUpdate, isAdmin, GlobalContext } from "common";
+import { getMeta, useForceUpdate, routes } from "common";
 import { Browser } from "components/Browser";
 import { LoadingScreen } from "components/LoadingScreen";
 
 export const RecordsScreen = ({ view, editFormReturnUrl }) => {
   let { updateValue, forceUpdate } = useForceUpdate();
   const [records, setRecords] = useState();
-  const { user } = useContext(GlobalContext);
 
   const meta = useMemo(
     () =>
@@ -28,16 +27,23 @@ export const RecordsScreen = ({ view, editFormReturnUrl }) => {
             listRecords: { items },
           },
         }) => {
-          setRecords(items);
+          setRecords(
+            editFormReturnUrl === routes.accounting
+              ? items
+              : items.map((item) => ({
+                  ...item,
+                  recordProjectId: item.project.id,
+                }))
+          );
         }
       )
       .catch((err) => console.error(err));
     return () => {
       API.cancel(promise, "API request has been canceled");
     };
-  }, [meta, updateValue]);
+  }, [meta, updateValue, editFormReturnUrl]);
 
-  if (!user || !records) return <LoadingScreen />;
+  if (!records) return <LoadingScreen />;
 
   return (
     <Browser
@@ -45,7 +51,6 @@ export const RecordsScreen = ({ view, editFormReturnUrl }) => {
       meta={meta}
       forceUpdate={forceUpdate}
       editFormReturnUrl={editFormReturnUrl}
-      isReadOnly={isAdmin(user)}
     />
   );
 };

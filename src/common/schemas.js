@@ -21,7 +21,7 @@ export const ProjectSchema = Yup.object().shape({
     input: true,
   }),
   name: Yup.string()
-    .required("Required")
+    .required()
     .meta({
       input: true,
       title: "Project name",
@@ -36,7 +36,7 @@ export const ProjectSchema = Yup.object().shape({
       },
     }),
   number: Yup.string()
-    .required("Required")
+    .required()
     .meta({
       input: true,
       title: "Project number",
@@ -62,61 +62,34 @@ export const ProjectSchema = Yup.object().shape({
     }),
 });
 
-const projectSelectedEventTarget = new EventTarget();
-projectSelectedEventTarget.eventName = "projectSelected";
-projectSelectedEventTarget.getOptions = async ({
-  selectedValue,
-  setOptions,
-}) => {
-  if (!selectedValue) return;
-  try {
-    const {
-      data: { getProject: project },
-    } = await API.graphql(graphqlOperation(getProject, { id: selectedValue }));
-    setOptions(project.tasks.sort().map((task) => [task, task]));
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const RecordSchema = Yup.object().shape({
+const RecordSchema = Yup.object().shape({
   id: Yup.string().meta({
     input: true,
   }),
   recordProjectId: Yup.string()
-    .required("Required")
+    .required()
     .meta({
       input: true,
       title: "Project",
       views: {
         edit: { order: 1 },
       },
-      options: async () => {
-        try {
-          const {
+      optionsPromise: () =>
+        API.graphql(graphqlOperation(listProjects)).then(
+          ({
             data: {
-              listProjects: { items: projects },
+              listProjects: { items },
             },
-          } = await API.graphql(graphqlOperation(listProjects));
-          return projects
-            .sort((a, b) =>
-              a.number < b.number ? -1 : a.number > b.number ? 1 : 0
-            )
-            .map((project) => [
-              project.id,
-              `${project.number} - ${project.name}`,
-            ]);
-        } catch (err) {
-          console.error(err);
-        }
-      },
-      selectedValueCallback: (selectedValue) => {
-        projectSelectedEventTarget.dispatchEvent(
-          new CustomEvent(projectSelectedEventTarget.eventName, {
-            detail: selectedValue,
-          })
-        );
-      },
+          }) =>
+            items
+              .sort((a, b) =>
+                a.number < b.number ? -1 : a.number > b.number ? 1 : 0
+              )
+              .map((project) => [
+                project.id,
+                `${project.number} - ${project.name}`,
+              ])
+        ),
     }),
   "project.number": Yup.string().meta({
     views: {
@@ -137,7 +110,14 @@ export const RecordSchema = Yup.object().shape({
         timesheets: { order: 5, width: "15em" },
         accounting: { title: "Task", order: 2, width: "20em" },
       },
-      options: projectSelectedEventTarget,
+      optionsPromise: (formObject) =>
+        API.graphql(
+          graphqlOperation(getProject, {
+            id: formObject.recordProjectId,
+          })
+        ).then(({ data: { getProject } }) =>
+          getProject.tasks.sort().map((task) => [task, task])
+        ),
     }),
   date: Yup.string()
     .required()
@@ -206,8 +186,7 @@ export const getMeta = ({ entityType, view = "default" }) => {
         type: fields[field].type,
         input: fields[field].meta?.input,
         title: fields[field].meta?.title,
-        options: fields[field].meta.options,
-        selectedValueCallback: fields[field].meta.selectedValueCallback,
+        optionsPromise: fields[field].meta.optionsPromise,
       }))
       .sort((a, b) => {
         const orderA = a.view && a.view.order;
