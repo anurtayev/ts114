@@ -95,7 +95,6 @@ export const EditForm = () => {
             <Form>
               {
                 <>
-                  <p>{JSON.stringify(values)}</p>
                   {fields.map(
                     (field, index) =>
                       field.view && (

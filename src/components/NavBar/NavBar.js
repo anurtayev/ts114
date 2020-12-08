@@ -1,17 +1,21 @@
 import { useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { API, graphqlOperation } from "aws-amplify";
 
+import { listRecords } from "graphql/queries";
+import { updateRecord } from "graphql/mutations";
 import {
   NavBarContainer,
   Banner,
   StyledRouterLink,
   AmplifySignOutStyled,
+  NavButton,
 } from "./NavBar.styles";
 import { GlobalContext, routes } from "common";
 
-export const NavBar = (props) => {
-  const { user } = useContext(GlobalContext);
+export const NavBar = ({ updateValue }) => {
+  const { user, globalForceUpdate } = useContext(GlobalContext);
   const {
     signInUserSession: {
       idToken: {
@@ -65,6 +69,31 @@ export const NavBar = (props) => {
           >
             New entry
           </StyledRouterLink>
+          <NavButton
+            onClick={() =>
+              API.graphql(graphqlOperation(listRecords), {
+                filter: { userId: { eq: email } },
+              })
+                .then(({ data: { listRecords: { items } } }) =>
+                  Promise.all(
+                    items.map(({ id }) =>
+                      API.graphql(
+                        graphqlOperation(updateRecord, {
+                          input: {
+                            id,
+                            submitted: true,
+                          },
+                        })
+                      )
+                    )
+                  )
+                )
+                .then(() => globalForceUpdate())
+                .catch((err) => console.error(err))
+            }
+          >
+            Submit
+          </NavButton>
         </Route>
       </Switch>
 

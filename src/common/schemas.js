@@ -111,13 +111,17 @@ const RecordSchema = Yup.object().shape({
         accounting: { title: "Task", order: 2, width: "20em" },
       },
       optionsPromise: (formObject) =>
-        API.graphql(
-          graphqlOperation(getProject, {
-            id: formObject.recordProjectId,
-          })
-        ).then(({ data: { getProject } }) =>
-          getProject.tasks.sort().map((task) => [task, task])
-        ),
+        formObject.recordProjectId
+          ? API.graphql(
+              graphqlOperation(getProject, {
+                id: formObject.recordProjectId,
+              })
+            )
+              .then(({ data: { getProject } }) =>
+                getProject.tasks.sort().map((task) => [task, task])
+              )
+              .catch((err) => console.error(err))
+          : Promise.resolve(),
     }),
   date: Yup.string()
     .required()
@@ -157,7 +161,10 @@ const RecordSchema = Yup.object().shape({
     .meta({
       input: true,
       title: "UserId",
-      views: { accounting: { order: 5, width: "30em" } },
+      views: {
+        timesheets: { width: "14em" },
+        accounting: { order: 5, width: "30em" },
+      },
     }),
   invoiced: Yup.boolean()
     .required()

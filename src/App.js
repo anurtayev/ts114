@@ -7,7 +7,7 @@ import {
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import { Switch, Route, useHistory } from "react-router-dom";
 
-import { GlobalContext, getDefaultRoute, routes } from "common";
+import { GlobalContext, getDefaultRoute, routes, useForceUpdate } from "common";
 import { RecordsScreen } from "components/RecordsScreen";
 import { ProjectsScreen } from "components/ProjectsScreen";
 import { EditForm } from "components/EditForm";
@@ -17,6 +17,7 @@ export const App = () => {
   const [authState, setAuthState] = useState();
   const [user, setUser] = useState();
   const history = useHistory();
+  const { updateValue, forceUpdate: globalForceUpdate } = useForceUpdate();
 
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
@@ -33,7 +34,10 @@ export const App = () => {
   }, [history, user]);
 
   return authState === AuthState.SignedIn && user && user.signInUserSession ? (
-    <GlobalContext.Provider value={{ user }}>
+    <GlobalContext.Provider
+      value={{ user, globalForceUpdate }}
+      key={updateValue}
+    >
       <NavBar />
       <Switch>
         <Route exact path={routes.accounting}>

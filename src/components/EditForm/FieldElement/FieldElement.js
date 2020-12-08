@@ -54,8 +54,8 @@ const getFieldComponent = ({ field, payload, options }) => {
             })
           }
         >
-          {options.map((option) => (
-            <option value={option[0]} key={option[0]}>
+          {options.map((option, index) => (
+            <option value={option[0]} key={index}>
               {option[1]}
             </option>
           ))}
@@ -85,11 +85,14 @@ export const FieldElement = ({
 
   useEffect(() => {
     optionsPromise &&
-      optionsPromise.then((options) => {
-        setOptions(options);
-        !options.find((element) => element[0] === payload) &&
-          setFieldValue(field.name, options[0][0]);
-      });
+      optionsPromise
+        .then((options) => {
+          setOptions(options);
+          options &&
+            (!options.find((element) => element[0] === payload) || !payload) &&
+            setFieldValue(field.name, options[0][0]);
+        })
+        .catch((error) => console.error(error));
   }, [optionsPromise, field.name, setFieldValue, payload]);
 
   return (

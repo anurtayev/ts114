@@ -11,7 +11,7 @@ export const NavBarContainer = styled(styled.div([ContainerStyles]))`
 
 export const Banner = styled.div``;
 
-export const StyledRouterLink = styled(Link)`
+export const ClickableElementStyles = `
   margin: 0 1em;
   background-color: rgba(255, 153, 0);
   color: white;
@@ -29,6 +29,10 @@ export const StyledRouterLink = styled(Link)`
   letter-spacing: 0.75px;
   text-transform: uppercase;
 `;
+
+export const StyledRouterLink = styled(Link)([ClickableElementStyles]);
+
+export const NavButton = styled.div([ClickableElementStyles]);
 
 export const AmplifySignOutStyled = styled(AmplifySignOut)`
   margin: 0 1em;
