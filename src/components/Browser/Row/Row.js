@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { useHistory } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 import { Container, StyledSpan, Button } from "./Row.styles";
 import { routes } from "common";
@@ -49,9 +50,18 @@ export const Row = ({
             title="Copy"
             onClick={async () => {
               setRedirectTo(
-                `${routes.editForm}?entityType=${entityType}&callbackURI=${btoa(
+                `${
+                  routes.editForm
+                }?entityType=${entityType}&isNew&callbackURI=${btoa(
                   editFormReturnUrl
-                )}&formObject=${btoa(JSON.stringify({ ...entry, id: "" }))}`
+                )}&formObject=${btoa(
+                  JSON.stringify({
+                    ...entry,
+                    id: uuidv4(),
+                    submitted: false,
+                    invoiced: false,
+                  })
+                )}`
               );
             }}
           >

@@ -4,7 +4,6 @@ export const routes = {
   accounting: "/accounting",
   timesheets: "/timesheets",
   projects: "/projects",
-  projectForm: "/project-form",
   editForm: "/edit-form",
 };
 

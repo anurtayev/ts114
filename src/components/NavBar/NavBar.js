@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { Switch, Route } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { API, graphqlOperation } from "aws-amplify";
+import { saveAs } from "file-saver";
+import { unparse } from "papaparse";
 
 import { listRecords } from "graphql/queries";
-import { updateRecord } from "graphql/mutations";
+import { updateRecord, deleteRecord } from "graphql/mutations";
 import {
   NavBarContainer,
   Banner,
@@ -31,9 +33,6 @@ export const NavBar = ({ updateValue }) => {
       <Banner>{email}</Banner>
 
       <Switch>
-        <Route path={routes.projectForm}>
-          <StyledRouterLink to={routes.accounting}>Accounting</StyledRouterLink>
-        </Route>
         <Route path={routes.projects}>
           <StyledRouterLink to={routes.accounting}>Accounting</StyledRouterLink>
           <StyledRouterLink
@@ -48,6 +47,86 @@ export const NavBar = ({ updateValue }) => {
         </Route>
         <Route path={routes.accounting}>
           <StyledRouterLink to={routes.projects}>Projects</StyledRouterLink>
+          <NavButton
+            onClick={() =>
+              API.graphql(graphqlOperation(listRecords))
+                .then(({ data: { listRecords: { items } } }) =>
+                  Promise.all(
+                    items
+                      // .filter((item) => !item.invoiced)
+                      .map(({ id }) =>
+                        API.graphql(
+                          graphqlOperation(updateRecord, {
+                            input: {
+                              id,
+                              invoiced: true,
+                            },
+                          })
+                        )
+                      )
+                  )
+                )
+                .then((items) => {
+                  var blob = new Blob(
+                    [
+                      unparse(
+                        items
+                          .map((item) => item.data.updateRecord)
+                          .map((item) => ({
+                            projectName: item.project.name,
+                            projectNumber: item.project.number,
+                            projectTask: item.projectTask,
+                            date: item.date,
+                            hours: item.hours,
+                            description: item.description,
+                            userId: item.userId,
+                          }))
+                      ),
+                    ],
+                    {
+                      type: "text/plain;charset=utf-8",
+                    }
+                  );
+                  saveAs(
+                    blob,
+                    `invoiceData-${new Date()
+                      .toISOString()
+                      .replace(/[-:T.]/g, "")
+                      .substring(0, 14)}.txt`
+                  );
+                })
+                .then(() => globalForceUpdate())
+                .catch((err) => console.error(err))
+            }
+          >
+            Invoice
+          </NavButton>
+          <NavButton
+            onClick={() =>
+              API.graphql(
+                graphqlOperation(listRecords, {
+                  filter: { invoiced: { eq: true } },
+                })
+              )
+                .then(({ data: { listRecords: { items } } }) =>
+                  Promise.all(
+                    items.map(({ id }) =>
+                      API.graphql(
+                        graphqlOperation(deleteRecord, {
+                          input: {
+                            id,
+                          },
+                        })
+                      )
+                    )
+                  )
+                )
+                .then(() => globalForceUpdate())
+                .catch((err) => console.error(err))
+            }
+          >
+            Wipe out
+          </NavButton>
         </Route>
         <Route path={routes.timesheets}>
           <StyledRouterLink
@@ -71,9 +150,11 @@ export const NavBar = ({ updateValue }) => {
           </StyledRouterLink>
           <NavButton
             onClick={() =>
-              API.graphql(graphqlOperation(listRecords), {
-                filter: { userId: { eq: email } },
-              })
+              API.graphql(
+                graphqlOperation(listRecords, {
+                  filter: { userId: { eq: email } },
+                })
+              )
                 .then(({ data: { listRecords: { items } } }) =>
                   Promise.all(
                     items.map(({ id }) =>

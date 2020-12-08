@@ -1,7 +1,13 @@
 import React, { useEffect, useState, useMemo, useContext } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 
-import { getMeta, useForceUpdate, routes, GlobalContext } from "common";
+import {
+  getMeta,
+  useForceUpdate,
+  routes,
+  GlobalContext,
+  isAdmin,
+} from "common";
 import { Browser } from "components/Browser";
 import { LoadingScreen } from "components/LoadingScreen";
 
@@ -29,9 +35,14 @@ export const RecordsScreen = ({ view, editFormReturnUrl }) => {
 
   useEffect(() => {
     const promise = API.graphql(
-      graphqlOperation(meta.listOp, {
-        filter: { userId: { eq: email } },
-      })
+      graphqlOperation(
+        meta.listOp,
+        isAdmin(user)
+          ? undefined
+          : {
+              filter: { userId: { eq: email } },
+            }
+      )
     );
     promise
       .then(
@@ -41,12 +52,17 @@ export const RecordsScreen = ({ view, editFormReturnUrl }) => {
           },
         }) => {
           setRecords(
-            editFormReturnUrl === routes.accounting
+            (editFormReturnUrl === routes.accounting
               ? items
               : items.map((item) => ({
                   ...item,
                   recordProjectId: item.project.id,
                 }))
+            ).sort((a, b) => {
+              if (a.userId < b.userId) return -1;
+              else if (a.userId > b.userId) return 1;
+              else return 0;
+            })
           );
         }
       )
@@ -54,7 +70,7 @@ export const RecordsScreen = ({ view, editFormReturnUrl }) => {
     return () => {
       API.cancel(promise, "API request has been canceled");
     };
-  }, [meta, updateValue, editFormReturnUrl, email]);
+  }, [meta, updateValue, editFormReturnUrl, email, user]);
 
   if (!records) return <LoadingScreen />;
 
