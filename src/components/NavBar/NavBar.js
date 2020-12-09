@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { Switch, Route } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import { API, graphqlOperation } from "aws-amplify";
 import { saveAs } from "file-saver";
 import { unparse } from "papaparse";
@@ -39,7 +38,7 @@ export const NavBar = ({ updateValue }) => {
             to={`${routes.editForm}?entityType=project&isNew&callbackURI=${btoa(
               routes.projects
             )}&formObject=${btoa(
-              JSON.stringify({ id: uuidv4(), name: "", number: "", tasks: [] })
+              JSON.stringify({ name: "", number: "", tasks: [] })
             )}`}
           >
             New project
@@ -53,7 +52,7 @@ export const NavBar = ({ updateValue }) => {
                 .then(({ data: { listRecords: { items } } }) =>
                   Promise.all(
                     items
-                      // .filter((item) => !item.invoiced)
+                      .filter((item) => !item.invoiced)
                       .map(({ id }) =>
                         API.graphql(
                           graphqlOperation(updateRecord, {
@@ -134,7 +133,6 @@ export const NavBar = ({ updateValue }) => {
               routes.timesheets
             )}&formObject=${btoa(
               JSON.stringify({
-                id: uuidv4(),
                 recordProjectId: "",
                 projectTask: "",
                 date: "",

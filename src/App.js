@@ -44,6 +44,7 @@ export const App = () => {
           <RecordsScreen
             view="accounting"
             editFormReturnUrl={routes.accounting}
+            readOnly
           />
         </Route>
         <Route path={routes.timesheets}>

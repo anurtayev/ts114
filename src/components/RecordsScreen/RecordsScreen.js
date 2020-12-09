@@ -11,7 +11,7 @@ import {
 import { Browser } from "components/Browser";
 import { LoadingScreen } from "components/LoadingScreen";
 
-export const RecordsScreen = ({ view, editFormReturnUrl }) => {
+export const RecordsScreen = ({ view, editFormReturnUrl, readOnly }) => {
   let { updateValue, forceUpdate } = useForceUpdate();
   const [records, setRecords] = useState();
   const { user } = useContext(GlobalContext);
@@ -80,6 +80,7 @@ export const RecordsScreen = ({ view, editFormReturnUrl }) => {
       meta={meta}
       forceUpdate={forceUpdate}
       editFormReturnUrl={editFormReturnUrl}
+      readOnly={readOnly}
     />
   );
 };

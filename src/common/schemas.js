@@ -41,7 +41,7 @@ export const ProjectSchema = Yup.object().shape({
       input: true,
       title: "Project number",
       views: {
-        default: { order: 2, width: "20em" },
+        default: { order: 0.5, width: "20em" },
         edit: {
           order: 2,
         },
@@ -57,7 +57,6 @@ export const ProjectSchema = Yup.object().shape({
         edit: {
           order: 3,
         },
-        default: { order: 3, width: "30em" },
       },
     }),
 });

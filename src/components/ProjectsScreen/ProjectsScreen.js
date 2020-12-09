@@ -22,7 +22,7 @@ export const ProjectsScreen = () => {
         }) => {
           setProjects(
             items.sort((a, b) =>
-              a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+              a.number < b.number ? -1 : a.number > b.number ? 1 : 0
             )
           );
         }

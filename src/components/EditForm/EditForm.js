@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { Formik } from "formik";
 import { useHistory, useLocation } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 import { FieldElement } from "./FieldElement";
 import { Form, Button, StyledH1, ButtonsContainer } from "./EditForm.styles";
@@ -69,19 +70,21 @@ export const EditForm = () => {
           initialValues={formObject}
           validationSchema={meta.schema}
           onSubmit={(values, { setSubmitting }) => {
+            const input = {
+              ...fields.reduce((accumulator, current) => {
+                if (current.input) {
+                  accumulator[current.name] = coerceType({
+                    field: current,
+                    value: values[current.name],
+                  });
+                }
+                return accumulator;
+              }, {}),
+            };
+
             API.graphql(
               graphqlOperation(isNew ? createOp : updateOp, {
-                input: {
-                  ...fields.reduce((accumulator, current) => {
-                    if (current.input) {
-                      accumulator[current.name] = coerceType({
-                        field: current,
-                        value: values[current.name],
-                      });
-                    }
-                    return accumulator;
-                  }, {}),
-                },
+                input: { ...input, id: input.id ? input.id : uuidv4() },
               })
             )
               .then(() => {
