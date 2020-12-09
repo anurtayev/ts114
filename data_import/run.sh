@@ -1,0 +1,1 @@
+aws2 dynamodb batch-write-item --request-items file://projectItems.json
