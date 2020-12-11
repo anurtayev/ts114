@@ -1,20 +1,24 @@
-import React, { useEffect, useState, useMemo, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 
 import {
-  getMeta,
-  useForceUpdate,
   routes,
   GlobalContext,
   isAdmin,
+  RecordSchema,
+  getSchemaDescriptor,
+  getFields,
 } from "common";
 import { Browser } from "components/Browser";
 import { LoadingScreen } from "components/LoadingScreen";
 
-export const RecordsScreen = ({ view, editFormReturnUrl, readOnly }) => {
-  let { updateValue, forceUpdate } = useForceUpdate();
+const schemaDescriptor = getSchemaDescriptor(RecordSchema);
+const { meta } = schemaDescriptor;
+
+export const RecordsScreen = ({ view, editFormReturnUrl }) => {
   const [records, setRecords] = useState();
   const { user } = useContext(GlobalContext);
+  const [fields, setFields] = useState();
 
   const {
     signInUserSession: {
@@ -24,14 +28,9 @@ export const RecordsScreen = ({ view, editFormReturnUrl, readOnly }) => {
     },
   } = user;
 
-  const meta = useMemo(
-    () =>
-      getMeta({
-        entityType: "record",
-        view,
-      }),
-    [view]
-  );
+  useEffect(() => {
+    setFields(getFields({ schemaDescriptor, view }));
+  }, [view]);
 
   useEffect(() => {
     const promise = API.graphql(
@@ -70,7 +69,7 @@ export const RecordsScreen = ({ view, editFormReturnUrl, readOnly }) => {
     return () => {
       API.cancel(promise, "API request has been canceled");
     };
-  }, [meta, updateValue, editFormReturnUrl, email, user]);
+  }, [editFormReturnUrl, email, user]);
 
   if (!records) return <LoadingScreen />;
 
@@ -78,9 +77,8 @@ export const RecordsScreen = ({ view, editFormReturnUrl, readOnly }) => {
     <Browser
       entries={records}
       meta={meta}
-      forceUpdate={forceUpdate}
       editFormReturnUrl={editFormReturnUrl}
-      readOnly={readOnly}
+      fields={fields}
     />
   );
 };

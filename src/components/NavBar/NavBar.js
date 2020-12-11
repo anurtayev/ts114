@@ -16,7 +16,7 @@ import {
 import { GlobalContext, routes } from "common";
 
 export const NavBar = ({ updateValue }) => {
-  const { user, globalForceUpdate } = useContext(GlobalContext);
+  const { user, forceUpdate } = useContext(GlobalContext);
   const {
     signInUserSession: {
       idToken: {
@@ -91,10 +91,10 @@ export const NavBar = ({ updateValue }) => {
                     `invoiceData-${new Date()
                       .toISOString()
                       .replace(/[-:T.]/g, "")
-                      .substring(0, 14)}.txt`
+                      .substring(0, 14)}.csv`
                   );
                 })
-                .then(() => globalForceUpdate())
+                .then(() => forceUpdate())
                 .catch((err) => console.error(err))
             }
           >
@@ -120,7 +120,7 @@ export const NavBar = ({ updateValue }) => {
                     )
                   )
                 )
-                .then(() => globalForceUpdate())
+                .then(() => forceUpdate())
                 .catch((err) => console.error(err))
             }
           >
@@ -167,7 +167,7 @@ export const NavBar = ({ updateValue }) => {
                     )
                   )
                 )
-                .then(() => globalForceUpdate())
+                .then(() => forceUpdate())
                 .catch((err) => console.error(err))
             }
           >

@@ -17,7 +17,7 @@ export const App = () => {
   const [authState, setAuthState] = useState();
   const [user, setUser] = useState();
   const history = useHistory();
-  const { updateValue, forceUpdate: globalForceUpdate } = useForceUpdate();
+  const { updateValue, forceUpdate } = useForceUpdate();
 
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
@@ -34,17 +34,13 @@ export const App = () => {
   }, [history, user]);
 
   return authState === AuthState.SignedIn && user && user.signInUserSession ? (
-    <GlobalContext.Provider
-      value={{ user, globalForceUpdate }}
-      key={updateValue}
-    >
+    <GlobalContext.Provider value={{ user, forceUpdate }} key={updateValue}>
       <NavBar />
       <Switch>
         <Route exact path={routes.accounting}>
           <RecordsScreen
             view="accounting"
             editFormReturnUrl={routes.accounting}
-            readOnly
           />
         </Route>
         <Route path={routes.timesheets}>

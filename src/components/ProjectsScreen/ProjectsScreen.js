@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 
-import { getMeta, useForceUpdate } from "common";
+import { getFields, ProjectSchema, getSchemaDescriptor, routes } from "common";
 import { Browser } from "components/Browser";
 import { LoadingScreen } from "components/LoadingScreen";
 
-const meta = getMeta({ entityType: "project" });
+const schemaDescriptor = getSchemaDescriptor(ProjectSchema);
+const { meta } = schemaDescriptor;
+const fields = getFields({ schemaDescriptor, view: "default" });
 
 export const ProjectsScreen = () => {
   const [projects, setProjects] = useState();
-  let { updateValue, forceUpdate } = useForceUpdate();
 
   useEffect(() => {
     const promise = API.graphql(graphqlOperation(meta.listOp));
@@ -31,10 +32,15 @@ export const ProjectsScreen = () => {
     return () => {
       API.cancel(promise, "API request has been canceled");
     };
-  }, [updateValue]);
+  }, []);
 
   return projects ? (
-    <Browser entries={projects} meta={meta} forceUpdate={forceUpdate} />
+    <Browser
+      entries={projects}
+      meta={meta}
+      fields={fields}
+      editFormReturnUrl={routes.projects}
+    />
   ) : (
     <LoadingScreen />
   );

@@ -1,5 +1,8 @@
+import React from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import * as Yup from "yup";
+import { v4 as uuidv4 } from "uuid";
+import { useLocation } from "react-router-dom";
 
 import {
   listProjects,
@@ -15,204 +18,292 @@ import {
   deleteRecord,
   updateRecord,
 } from "graphql/mutations";
+import { Utilities } from "components/Utilities";
+import { routes } from "common";
 
-export const ProjectSchema = Yup.object().shape({
-  id: Yup.string().meta({
-    input: true,
-  }),
-  name: Yup.string()
-    .required()
-    .meta({
+export const ProjectSchema = Yup.object()
+  .shape({
+    id: Yup.string().meta({
       input: true,
-      title: "Project name",
+    }),
+    name: Yup.string()
+      .required()
+      .meta({
+        input: true,
+        title: "Project name",
+        views: {
+          default: {
+            order: 1,
+            width: "30em",
+            visible: true,
+          },
+          edit: {
+            order: 1,
+            visible: true,
+          },
+        },
+      }),
+    number: Yup.string()
+      .required()
+      .meta({
+        input: true,
+        title: "Project number",
+        views: {
+          default: { order: 0.5, width: "20em", visible: true },
+          edit: {
+            order: 2,
+            visible: true,
+          },
+        },
+      }),
+    tasks: Yup.array()
+      .required()
+      .min(1, "need elements")
+      .meta({
+        input: true,
+        title: "Project tasks",
+        views: {
+          edit: {
+            order: 3,
+            visible: true,
+          },
+        },
+      }),
+  })
+  .meta({
+    entityType: "project",
+    getObjectCopy: (formObject) => ({
+      ...formObject,
+      id: uuidv4(),
+      submitted: false,
+      invoiced: false,
+    }),
+    getOp: getProject,
+    listOp: listProjects,
+    createOp: createProject,
+    updateOp: updateProject,
+    deleteOp: deleteProject,
+    UtilityElement: ({ entry, meta, editFormReturnUrl }) => (
+      <Utilities
+        entry={entry}
+        meta={meta}
+        editFormReturnUrl={editFormReturnUrl}
+      />
+    ),
+    UtilityElementHeader: () => <div></div>,
+  });
+
+export const ProjectSchemaDescriptor = ProjectSchema.describe();
+
+export const RecordSchema = Yup.object()
+  .shape({
+    id: Yup.string().meta({
+      input: true,
+    }),
+    recordProjectId: Yup.string()
+      .required()
+      .meta({
+        input: true,
+        title: "Project",
+        views: {
+          edit: { order: 1, visible: true },
+        },
+        optionsPromise: () =>
+          API.graphql(graphqlOperation(listProjects)).then(
+            ({
+              data: {
+                listProjects: { items },
+              },
+            }) =>
+              items
+                .sort((a, b) =>
+                  a.number < b.number ? -1 : a.number > b.number ? 1 : 0
+                )
+                .map((project) => [
+                  project.id,
+                  `${project.number} - ${project.name}`,
+                ])
+          ),
+      }),
+    "project.number": Yup.string().meta({
       views: {
-        default: {
+        timesheets: { order: 3, width: "5em" },
+        visible: true,
+        accounting: {
+          title: "Project",
           order: 1,
           width: "30em",
-        },
-        edit: {
-          order: 1,
+          visible: true,
         },
       },
     }),
-  number: Yup.string()
-    .required()
-    .meta({
-      input: true,
-      title: "Project number",
-      views: {
-        default: { order: 0.5, width: "20em" },
-        edit: {
-          order: 2,
-        },
-      },
+    "project.name": Yup.string().meta({
+      views: { timesheets: { order: 4, width: "15em" } },
     }),
-  tasks: Yup.array()
-    .required()
-    .min(1, "need elems")
-    .meta({
-      input: true,
-      title: "Project tasks",
-      views: {
-        edit: {
-          order: 3,
+    projectTask: Yup.string()
+      .required()
+      .meta({
+        input: true,
+        title: "Project Task",
+        views: {
+          edit: { order: 2, visible: true },
+          timesheets: { order: 5, width: "15em", visible: true },
+          accounting: { title: "Task", order: 2, width: "20em", visible: true },
         },
-      },
-    }),
-});
-
-const RecordSchema = Yup.object().shape({
-  id: Yup.string().meta({
-    input: true,
-  }),
-  recordProjectId: Yup.string()
-    .required()
-    .meta({
-      input: true,
-      title: "Project",
-      views: {
-        edit: { order: 1 },
-      },
-      optionsPromise: () =>
-        API.graphql(graphqlOperation(listProjects)).then(
-          ({
-            data: {
-              listProjects: { items },
-            },
-          }) =>
-            items
-              .sort((a, b) =>
-                a.number < b.number ? -1 : a.number > b.number ? 1 : 0
+        optionsPromise: (formObject) =>
+          formObject.recordProjectId
+            ? API.graphql(
+                graphqlOperation(getProject, {
+                  id: formObject.recordProjectId,
+                })
               )
-              .map((project) => [
-                project.id,
-                `${project.number} - ${project.name}`,
-              ])
-        ),
-    }),
-  "project.number": Yup.string().meta({
-    views: {
-      timesheets: { order: 3, width: "5em" },
-      accounting: { title: "Project", order: 1, width: "30em" },
-    },
-  }),
-  "project.name": Yup.string().meta({
-    views: { timesheets: { order: 4, width: "15em" } },
-  }),
-  projectTask: Yup.string()
-    .required()
-    .meta({
-      input: true,
-      title: "Project Task",
-      views: {
-        edit: { order: 2 },
-        timesheets: { order: 5, width: "15em" },
-        accounting: { title: "Task", order: 2, width: "20em" },
-      },
-      optionsPromise: (formObject) =>
-        formObject.recordProjectId
-          ? API.graphql(
-              graphqlOperation(getProject, {
-                id: formObject.recordProjectId,
-              })
-            )
-              .then(({ data: { getProject } }) =>
-                getProject.tasks.sort().map((task) => [task, task])
-              )
-              .catch((err) => console.error(err))
-          : Promise.resolve(),
-    }),
-  date: Yup.string()
-    .required()
-    .meta({
-      input: true,
-      title: "Date",
-      views: {
-        edit: { order: 3, type: "date" },
-        accounting: { order: 0.5, width: "30em" },
-        timesheets: { order: 2, width: "7em" },
-      },
-    }),
-  hours: Yup.number()
-    .required()
-    .meta({
-      input: true,
-      title: "Hours",
-      views: {
-        edit: { order: 4 },
-        timesheets: { order: 6, width: "3em" },
-        accounting: { order: 3, width: "3em" },
-      },
-    }),
-  description: Yup.string()
-    .required()
-    .meta({
-      input: true,
-      title: "Description",
-      views: {
-        edit: { order: 5 },
-        timesheets: { order: 7, width: "30em" },
-        accounting: { order: 4, width: "30em" },
-      },
-    }),
-  userId: Yup.string()
-    .required()
-    .meta({
-      input: true,
-      title: "UserId",
-      views: {
-        timesheets: { width: "14em" },
-        accounting: { order: 5, width: "30em" },
-      },
-    }),
-  invoiced: Yup.boolean()
-    .required()
-    .meta({
-      input: true,
-      title: "Invoiced",
-      views: { accounting: { order: 0.25, width: "3em" } },
-    }),
-  submitted: Yup.boolean()
-    .required()
-    .meta({
-      input: true,
-      title: "Submitted",
-      views: { timesheets: { order: 1, width: "4em" } },
-    }),
-});
-
-export const getMeta = ({ entityType, view = "default" }) => {
-  const schema = entityType === "project" ? ProjectSchema : RecordSchema;
-  const { fields } = schema.describe();
-  return {
-    fields: Reflect.ownKeys(fields)
-      .map((field) => ({
-        name: field,
-        view: fields[field].meta?.views?.[view],
-        type: fields[field].type,
-        input: fields[field].meta?.input,
-        title: fields[field].meta?.title,
-        optionsPromise: fields[field].meta.optionsPromise,
-      }))
-      .sort((a, b) => {
-        const orderA = a.view && a.view.order;
-        const orderB = b.view && b.view.order;
-        if (orderA === undefined && orderB === undefined) {
-          return 0;
-        } else if (orderA === undefined && orderB !== undefined) {
-          return 1;
-        } else if (orderA !== undefined && orderB === undefined) {
-          return -1;
-        } else if (orderA < orderB) return -1;
-        else if (orderA > orderB) return 1;
-        else return 0;
+                .then(({ data: { getProject } }) =>
+                  getProject.tasks.sort().map((task) => [task, task])
+                )
+                .catch((err) => console.error(err))
+            : Promise.resolve(),
       }),
-    getOp: entityType === "project" ? getProject : getRecord,
-    listOp: entityType === "project" ? listProjects : listRecords,
-    createOp: entityType === "project" ? createProject : createRecord,
-    updateOp: entityType === "project" ? updateProject : updateRecord,
-    deleteOp: entityType === "project" ? deleteProject : deleteRecord,
-    schema,
-    entityType,
-  };
+    date: Yup.string()
+      .required()
+      .meta({
+        input: true,
+        title: "Date",
+        views: {
+          edit: { order: 3, type: "date", visible: true },
+          accounting: { order: 0.5, width: "30em", visible: true },
+          timesheets: { order: 2, width: "7em", visible: true },
+        },
+      }),
+    hours: Yup.number()
+      .required()
+      .meta({
+        input: true,
+        title: "Hours",
+        views: {
+          edit: { order: 4, visible: true },
+          timesheets: { order: 6, width: "3em", visible: true },
+          accounting: { order: 3, width: "3em", visible: true },
+        },
+      }),
+    description: Yup.string()
+      .required()
+      .meta({
+        input: true,
+        title: "Description",
+        views: {
+          edit: { order: 5, visible: true },
+          timesheets: { order: 7, width: "30em", visible: true },
+          accounting: { order: 4, width: "30em", visible: true },
+        },
+      }),
+    userId: Yup.string()
+      .required()
+      .meta({
+        input: true,
+        title: "UserId",
+        views: {
+          timesheets: { width: "14em", visible: true },
+          accounting: { order: 5, width: "30em", visible: true },
+        },
+      }),
+    invoiced: Yup.boolean()
+      .required()
+      .meta({
+        input: true,
+        title: "Invoiced",
+        views: {
+          accounting: {
+            order: 0.25,
+            width: "3em",
+            format: (value) => (value ? "Invoiced" : ""),
+            visible: true,
+          },
+        },
+      }),
+    submitted: Yup.boolean()
+      .required()
+      .meta({
+        input: true,
+        title: "Submitted",
+        views: {
+          timesheets: {
+            order: 1,
+            width: "4em",
+            format: (value) => (value ? "Submitted" : ""),
+            visible: true,
+          },
+        },
+      }),
+  })
+  .meta({
+    entityType: "record",
+    getObjectCopy: (formObject) => ({
+      ...formObject,
+      id: uuidv4(),
+    }),
+    getOp: getRecord,
+    listOp: listRecords,
+    createOp: createRecord,
+    updateOp: updateRecord,
+    deleteOp: deleteRecord,
+    UtilityElement: ({ entry, meta, editFormReturnUrl }) => {
+      const location = useLocation();
+
+      const readOnly = location === routes.accounting;
+
+      if (!location) return null;
+
+      return (
+        !readOnly && (
+          <Utilities
+            entry={entry}
+            meta={meta}
+            editFormReturnUrl={editFormReturnUrl}
+          />
+        )
+      );
+    },
+    UtilityElementHeader: () => {
+      const location = useLocation();
+
+      const readOnly = location === routes.accounting;
+
+      if (!location) return null;
+
+      return !readOnly && <div></div>;
+    },
+  });
+
+export const RecordSchemaDescriptor = RecordSchema.describe();
+
+export const getFields = ({ schemaDescriptor: { fields }, view }) =>
+  Reflect.ownKeys(fields)
+    .map((field) => ({
+      name: field,
+      type: fields[field].type,
+      input: fields[field]?.meta?.input,
+      title: fields[field]?.meta?.title,
+      optionsPromise: fields[field].meta?.optionsPromise,
+      ...fields[field]?.meta?.views?.[view],
+    }))
+    .sort((a, b) => {
+      const orderA = a.order;
+      const orderB = b.order;
+      if (orderA === undefined && orderB === undefined) {
+        return 0;
+      } else if (orderA === undefined && orderB !== undefined) {
+        return 1;
+      } else if (orderA !== undefined && orderB === undefined) {
+        return -1;
+      } else if (orderA < orderB) return -1;
+      else if (orderA > orderB) return 1;
+      else return 0;
+    });
+
+export const entityMap = {
+  project: ProjectSchema,
+  record: RecordSchema,
 };
+
+export const getSchema = (entityType) => entityMap[entityType];
+export const getSchemaDescriptor = (schema) => schema.describe();

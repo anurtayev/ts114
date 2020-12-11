@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { API, graphqlOperation } from "aws-amplify";
-import { useHistory } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import React from "react";
 
-import { Container, StyledSpan, Button } from "./Row.styles";
-import { routes } from "common";
+import { Container, StyledSpan } from "./Row.styles";
 
 const getFieldValue = ({ entry, path }) =>
   path.includes(".")
@@ -13,81 +9,24 @@ const getFieldValue = ({ entry, path }) =>
         .reduce((accumulator, current) => accumulator[current], entry)
     : entry[path];
 
-export const Row = ({
-  entry,
-  meta: { fields, deleteOp, entityType },
-  isEvenRow,
-  forceUpdate,
-  editFormReturnUrl,
-  readOnly,
-}) => {
-  const history = useHistory();
-  const [redirectTo, setRedirectTo] = useState();
-
-  useEffect(() => {
-    redirectTo && history.push(redirectTo);
-  }, [history, redirectTo]);
-
+export const Row = ({ entry, meta, fields, isEvenRow, editFormReturnUrl }) => {
   return (
     <Container isEvenRow={isEvenRow}>
-      {!readOnly && (
-        <>
-          <Button
-            title="Delete"
-            onClick={async () => {
-              try {
-                await API.graphql(
-                  graphqlOperation(deleteOp, { input: { id: entry.id } })
-                );
-                forceUpdate();
-              } catch (error) {
-                console.error(error);
-              }
-            }}
-          >
-            &times;
-          </Button>
-          <Button
-            title="Copy"
-            onClick={async () => {
-              setRedirectTo(
-                `${
-                  routes.editForm
-                }?entityType=${entityType}&isNew&callbackURI=${btoa(
-                  editFormReturnUrl
-                )}&formObject=${btoa(
-                  JSON.stringify({
-                    ...entry,
-                    id: uuidv4(),
-                    submitted: false,
-                    invoiced: false,
-                  })
-                )}`
-              );
-            }}
-          >
-            &#x2398;
-          </Button>
-          <Button
-            title="Edit"
-            onClick={async () => {
-              setRedirectTo(
-                `${routes.editForm}?entityType=${entityType}&callbackURI=${btoa(
-                  editFormReturnUrl
-                )}&formObject=${btoa(JSON.stringify(entry))}`
-              );
-            }}
-          >
-            &#x270D;
-          </Button>
-        </>
-      )}
+      <meta.UtilityElement
+        entry={entry}
+        meta={meta}
+        editFormReturnUrl={editFormReturnUrl}
+      />
 
       {fields.map(
         (field, index) =>
-          field.view && (
-            <StyledSpan key={index} width={field.view.width}>
-              {String(getFieldValue({ entry, path: field.name }))}
+          field.visible && (
+            <StyledSpan key={index} width={field.width}>
+              {String(
+                field.format
+                  ? field.format(getFieldValue({ entry, path: field.name }))
+                  : getFieldValue({ entry, path: field.name })
+              )}
             </StyledSpan>
           )
       )}

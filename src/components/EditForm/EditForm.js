@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { FieldElement } from "./FieldElement";
 import { Form, Button, StyledH1, ButtonsContainer } from "./EditForm.styles";
-import { getMeta } from "common";
+import { getFields, getSchema, getSchemaDescriptor } from "common";
 import { LoadingScreen } from "components/LoadingScreen";
 
 const coerceType = ({ field, value }) => {
@@ -30,6 +30,7 @@ export const EditForm = () => {
   const [entityType, setEntityType] = useState();
   const [params, setParams] = useState();
   const [isNew, setIsNew] = useState();
+  const [fields, setFields] = useState();
 
   useEffect(() => {
     if (search) {
@@ -47,9 +48,12 @@ export const EditForm = () => {
   }, [params]);
 
   useEffect(() => {
-    setMeta(
-      getMeta({
-        entityType: entityType,
+    const schemaDescriptor = getSchemaDescriptor(getSchema(entityType));
+
+    setMeta(schemaDescriptor.meta);
+    setFields(
+      getFields({
+        schemaDescriptor,
         view: "edit",
       })
     );
@@ -62,7 +66,7 @@ export const EditForm = () => {
   if (!meta || !formObject || !entityType) {
     return <LoadingScreen />;
   } else {
-    const { updateOp, createOp, fields } = meta;
+    const { updateOp, createOp } = meta;
     return (
       <>
         <StyledH1>Edit {entityType}</StyledH1>
@@ -100,7 +104,7 @@ export const EditForm = () => {
                 <>
                   {fields.map(
                     (field, index) =>
-                      field.view && (
+                      field.visible && (
                         <FieldElement
                           field={field}
                           key={index}
