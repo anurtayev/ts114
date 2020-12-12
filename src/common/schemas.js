@@ -170,7 +170,7 @@ export const RecordSchema = Yup.object()
         input: true,
         title: "Date",
         views: {
-          edit: { order: 3, type: "date", visible: true },
+          edit: { order: 3, type: "date", visible: true, width: "15rem" },
           accounting: { order: 0.5, width: "30em", visible: true },
           timesheets: { order: 2, width: "7em", visible: true },
         },
@@ -184,7 +184,7 @@ export const RecordSchema = Yup.object()
         input: true,
         title: "Hours",
         views: {
-          edit: { order: 4, visible: true },
+          edit: { order: 4, visible: true, width: "5rem" },
           timesheets: { order: 6, width: "3em", visible: true },
           accounting: { order: 3, width: "3em", visible: true },
         },

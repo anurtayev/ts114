@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
 
-import { Container, Button } from "./Utilities.styles";
+import { Button } from "./Utilities.styles";
 import { routes, GlobalContext } from "common";
 
 export const Utilities = ({ entry, meta, editFormReturnUrl }) => {

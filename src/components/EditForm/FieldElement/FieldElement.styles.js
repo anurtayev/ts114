@@ -17,5 +17,6 @@ export const ArrayElementDiv = styled.div`
 
 export const StyledField = styled(Field)`
   height: 2rem;
-  width: 30rem;
+  width: ${(props) => props.width};
+  background-color: white;
 `;

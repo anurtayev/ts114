@@ -69,6 +69,8 @@ const getFieldComponent = ({ field, payload, options }) => {
         name={field.name}
         type={field.type || "text"}
         placeholder={field.type === "date" ? "yyyy-mm-dd" : ""}
+        width={field.width}
+        onFocus={(e) => e.target.select()}
       />
     );
   }
