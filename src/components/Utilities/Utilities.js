@@ -13,7 +13,7 @@ export const Utilities = ({ entry, meta, editFormReturnUrl }) => {
 
   if (!history) return null;
   return (
-    <Container>
+    <>
       <Button
         title="Delete"
         onClick={async () => {
@@ -55,6 +55,6 @@ export const Utilities = ({ entry, meta, editFormReturnUrl }) => {
       >
         &#x270D;
       </Button>
-    </Container>
+    </>
   );
 };

@@ -11,8 +11,6 @@ import { LoadingScreen } from "components/LoadingScreen";
 
 const coerceType = ({ field, value }) => {
   switch (field.type) {
-    case "date":
-      return new Date(value).toISOString();
     case "number":
       return Number(value);
     default:
@@ -23,7 +21,6 @@ const coerceType = ({ field, value }) => {
 export const EditForm = () => {
   const { search } = useLocation();
   const history = useHistory();
-  const [redirectTo, setRedirectTo] = useState();
   const [callbackURI, setCallbackURI] = useState();
   const [meta, setMeta] = useState();
   const [formObject, setFormObject] = useState();
@@ -31,25 +28,29 @@ export const EditForm = () => {
   const [params, setParams] = useState();
   const [isNew, setIsNew] = useState();
   const [fields, setFields] = useState();
+  const [schema, setSchema] = useState();
 
   useEffect(() => {
-    if (search) {
-      setParams(new URLSearchParams(search));
-    }
+    if (!search) return;
+    setParams(new URLSearchParams(search));
   }, [search]);
 
   useEffect(() => {
-    if (params) {
-      setEntityType(params.get("entityType"));
-      setIsNew(params.get("isNew") === null ? false : true);
-      setCallbackURI(atob(params.get("callbackURI")));
-      setFormObject(JSON.parse(atob(params.get("formObject"))));
-    }
+    if (!params) return;
+    setEntityType(params.get("entityType"));
+    setIsNew(params.get("isNew") === null ? false : true);
+    setCallbackURI(atob(params.get("callbackURI")));
+    setFormObject(JSON.parse(atob(params.get("formObject"))));
   }, [params]);
 
   useEffect(() => {
-    const schemaDescriptor = getSchemaDescriptor(getSchema(entityType));
+    if (!entityType) return;
+    setSchema(getSchema(entityType));
+  }, [entityType]);
 
+  useEffect(() => {
+    if (!schema) return;
+    const schemaDescriptor = getSchemaDescriptor(schema);
     setMeta(schemaDescriptor.meta);
     setFields(
       getFields({
@@ -57,13 +58,9 @@ export const EditForm = () => {
         view: "edit",
       })
     );
-  }, [entityType]);
+  }, [schema]);
 
-  useEffect(() => {
-    redirectTo && history.push(redirectTo);
-  }, [history, redirectTo]);
-
-  if (!meta || !formObject || !entityType) {
+  if (!meta || !formObject || !entityType || !schema || !history) {
     return <LoadingScreen />;
   } else {
     const { updateOp, createOp } = meta;
@@ -72,7 +69,7 @@ export const EditForm = () => {
         <StyledH1>Edit {entityType}</StyledH1>
         <Formik
           initialValues={formObject}
-          validationSchema={meta.schema}
+          validationSchema={schema}
           onSubmit={(values, { setSubmitting }) => {
             const input = {
               ...fields.reduce((accumulator, current) => {
@@ -93,7 +90,7 @@ export const EditForm = () => {
             )
               .then(() => {
                 setSubmitting(false);
-                setRedirectTo(callbackURI);
+                history.push(callbackURI);
               })
               .catch((err) => console.error(err));
           }}
@@ -122,7 +119,7 @@ export const EditForm = () => {
                 </Button>
                 <Button
                   onClick={() => {
-                    setRedirectTo(callbackURI);
+                    history.push(callbackURI);
                   }}
                   disabled={isSubmitting}
                 >

@@ -5,6 +5,7 @@ import {
   FieldContainer,
   StyledLabel,
   ArrayElementDiv,
+  StyledField,
 } from "./FieldElement.styles";
 
 const getFieldComponent = ({ field, payload, options }) => {
@@ -44,7 +45,7 @@ const getFieldComponent = ({ field, payload, options }) => {
   } else if (field.optionsPromise) {
     return (
       options && (
-        <Field
+        <StyledField
           as="select"
           name={field.name}
           onInput={
@@ -59,17 +60,15 @@ const getFieldComponent = ({ field, payload, options }) => {
               {option[1]}
             </option>
           ))}
-        </Field>
+        </StyledField>
       )
     );
   } else {
     return (
-      <Field
+      <StyledField
         name={field.name}
-        type={field.view.type || "text"}
-        placeholder={
-          field.view && field.view.type === "date" ? "yyyy-mm-dd" : ""
-        }
+        type={field.type || "text"}
+        placeholder={field.type === "date" ? "yyyy-mm-dd" : ""}
       />
     );
   }
@@ -97,9 +96,7 @@ export const FieldElement = ({
 
   return (
     <FieldContainer>
-      <StyledLabel htmlFor={field.name}>
-        {field.view.title || field.title}
-      </StyledLabel>
+      <StyledLabel htmlFor={field.name}>{field.title}</StyledLabel>
       {getFieldComponent({ field, payload, options })}
       <ErrorMessage name={field.name} component="div" />
     </FieldContainer>

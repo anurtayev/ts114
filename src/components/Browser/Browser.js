@@ -6,7 +6,7 @@ import { HeaderRow } from "./HeaderRow";
 
 export const Browser = ({ entries, meta, editFormReturnUrl, fields }) => (
   <Container>
-    <HeaderRow fields={fields}></HeaderRow>
+    <HeaderRow meta={meta} fields={fields}></HeaderRow>
     {entries.map((entry, index) => (
       <Row
         key={index}

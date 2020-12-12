@@ -60,6 +60,8 @@ export const RecordsScreen = ({ view, editFormReturnUrl }) => {
             ).sort((a, b) => {
               if (a.userId < b.userId) return -1;
               else if (a.userId > b.userId) return 1;
+              else if (a.date < b.date) return -1;
+              else if (a.date > b.date) return 1;
               else return 0;
             })
           );

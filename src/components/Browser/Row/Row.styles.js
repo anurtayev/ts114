@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background: ${(props) => props.theme.primaryColor};
   display: flex;
   background: ${(props) =>
-    props.isEvenRow ? "aquamarine" : props.theme.primaryColor};
+    props.isEvenRow ? props.theme.rowAlternate : props.theme.primaryColor};
 `;
 
 export const StyledSpan = styled.span`

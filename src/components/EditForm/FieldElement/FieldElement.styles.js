@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Field } from "formik";
 
 export const FieldContainer = styled.div`
   display: flex;
@@ -12,4 +13,9 @@ export const StyledLabel = styled.label`
 
 export const ArrayElementDiv = styled.div`
   margin-bottom: 0.5rem;
+`;
+
+export const StyledField = styled(Field)`
+  height: 2rem;
+  width: 30rem;
 `;

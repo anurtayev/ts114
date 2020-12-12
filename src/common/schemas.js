@@ -19,6 +19,7 @@ import {
   updateRecord,
 } from "graphql/mutations";
 import { Utilities } from "components/Utilities";
+import { StyledSpan } from "components/StyledSpan";
 import { routes } from "common";
 
 export const ProjectSchema = Yup.object()
@@ -90,10 +91,10 @@ export const ProjectSchema = Yup.object()
         editFormReturnUrl={editFormReturnUrl}
       />
     ),
-    UtilityElementHeader: () => <div></div>,
+    UtilityElementHeader: () => (
+      <StyledSpan width={"5.96rem"}>&#x25b8;</StyledSpan>
+    ),
   });
-
-export const ProjectSchemaDescriptor = ProjectSchema.describe();
 
 export const RecordSchema = Yup.object()
   .shape({
@@ -176,6 +177,9 @@ export const RecordSchema = Yup.object()
       }),
     hours: Yup.number()
       .required()
+      .notOneOf([""])
+      .moreThan(0)
+      .max(8)
       .meta({
         input: true,
         title: "Hours",
@@ -206,20 +210,10 @@ export const RecordSchema = Yup.object()
           accounting: { order: 5, width: "30em", visible: true },
         },
       }),
-    invoiced: Yup.boolean()
-      .required()
-      .meta({
-        input: true,
-        title: "Invoiced",
-        views: {
-          accounting: {
-            order: 0.25,
-            width: "3em",
-            format: (value) => (value ? "Invoiced" : ""),
-            visible: true,
-          },
-        },
-      }),
+    invoiced: Yup.boolean().required().meta({
+      input: true,
+      title: "Invoiced",
+    }),
     submitted: Yup.boolean()
       .required()
       .meta({
@@ -230,7 +224,6 @@ export const RecordSchema = Yup.object()
             order: 1,
             width: "4em",
             format: (value) => (value ? "Submitted" : ""),
-            visible: true,
           },
         },
       }),
@@ -249,32 +242,40 @@ export const RecordSchema = Yup.object()
     UtilityElement: ({ entry, meta, editFormReturnUrl }) => {
       const location = useLocation();
 
-      const readOnly = location === routes.accounting;
-
       if (!location) return null;
-
-      return (
-        !readOnly && (
+      else if (location.pathname === routes.accounting)
+        return (
+          <StyledSpan width={"6.797rem"}>
+            {entry.invoiced ? "Invoiced" : ""}
+          </StyledSpan>
+        );
+      else
+        return entry.submitted ? (
+          <StyledSpan width={"5.84rem"}>Submitted</StyledSpan>
+        ) : (
           <Utilities
             entry={entry}
             meta={meta}
             editFormReturnUrl={editFormReturnUrl}
           />
-        )
-      );
+        );
     },
     UtilityElementHeader: () => {
       const location = useLocation();
 
-      const readOnly = location === routes.accounting;
-
       if (!location) return null;
 
-      return !readOnly && <div></div>;
+      return (
+        <StyledSpan
+          width={
+            location.pathname === routes.accounting ? "6.797rem" : "5.84rem"
+          }
+        >
+          &#x25b8;
+        </StyledSpan>
+      );
     },
   });
-
-export const RecordSchemaDescriptor = RecordSchema.describe();
 
 export const getFields = ({ schemaDescriptor: { fields }, view }) =>
   Reflect.ownKeys(fields)

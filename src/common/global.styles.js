@@ -1,5 +1,6 @@
 export const theme = {
-  primaryColor: "cyan",
+  primaryColor: "azure",
+  rowAlternate: "beige",
 };
 
 export const ContainerStyles = `
