@@ -8,7 +8,7 @@ import {
   StyledField,
 } from "./FieldElement.styles";
 
-const getFieldComponent = ({ field, payload, options }) => {
+const getFieldComponent = ({ field, payload, options, setFieldValue }) => {
   if (field.type === "array") {
     return (
       <FieldArray
@@ -48,12 +48,9 @@ const getFieldComponent = ({ field, payload, options }) => {
         <StyledField
           as="select"
           name={field.name}
-          onInput={
-            field.selectedValueCallback &&
-            ((event) => {
-              field.selectedValueCallback(event.target.value);
-            })
-          }
+          onInput={(event) => {
+            setFieldValue(field.name, event.target.value);
+          }}
         >
           {options.map((option, index) => (
             <option value={option[0]} key={index}>
@@ -81,6 +78,7 @@ export const FieldElement = ({
   payload,
   optionsPromise,
   setFieldValue,
+  user,
 }) => {
   const [options, setOptions] = useState();
 
@@ -99,7 +97,12 @@ export const FieldElement = ({
   return (
     <FieldContainer>
       <StyledLabel htmlFor={field.name}>{field.title}</StyledLabel>
-      {getFieldComponent({ field, payload, options })}
+      {getFieldComponent({
+        field,
+        payload,
+        options,
+        setFieldValue,
+      })}
       <ErrorMessage name={field.name} component="div" />
     </FieldContainer>
   );
