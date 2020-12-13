@@ -48,21 +48,23 @@ export const NavBar = ({ updateValue }) => {
           <StyledRouterLink to={routes.projects}>Projects</StyledRouterLink>
           <NavButton
             onClick={() =>
-              API.graphql(graphqlOperation(listRecords))
+              API.graphql(
+                graphqlOperation(listRecords, {
+                  filter: { invoiced: { eq: false }, submitted: { eq: true } },
+                })
+              )
                 .then(({ data: { listRecords: { items } } }) =>
                   Promise.all(
-                    items
-                      .filter((item) => !item.invoiced)
-                      .map(({ id }) =>
-                        API.graphql(
-                          graphqlOperation(updateRecord, {
-                            input: {
-                              id,
-                              invoiced: true,
-                            },
-                          })
-                        )
+                    items.map(({ id }) =>
+                      API.graphql(
+                        graphqlOperation(updateRecord, {
+                          input: {
+                            id,
+                            invoiced: true,
+                          },
+                        })
                       )
+                    )
                   )
                 )
                 .then((items) => {
