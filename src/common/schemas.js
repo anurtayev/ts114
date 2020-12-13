@@ -127,11 +127,10 @@ export const RecordSchema = Yup.object()
           ),
       }),
     "project.number": Yup.string().meta({
+      title: "Project",
       views: {
-        timesheets: { order: 3, width: "5em" },
-        visible: true,
+        timesheets: { order: 3, width: "5em", visible: true },
         accounting: {
-          title: "Project",
           order: 1,
           width: "30em",
           visible: true,
@@ -139,7 +138,8 @@ export const RecordSchema = Yup.object()
       },
     }),
     "project.name": Yup.string().meta({
-      views: { timesheets: { order: 4, width: "15em" } },
+      title: "Project Name",
+      views: { timesheets: { order: 4, width: "15em", visible: true } },
     }),
     projectTask: Yup.string()
       .required()

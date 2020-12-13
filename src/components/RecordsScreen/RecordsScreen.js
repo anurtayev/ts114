@@ -37,7 +37,9 @@ export const RecordsScreen = ({ view, editFormReturnUrl }) => {
       graphqlOperation(
         meta.listOp,
         isAdmin(user)
-          ? undefined
+          ? {
+              filter: { submitted: { eq: true } },
+            }
           : {
               filter: { userId: { eq: email } },
             }
