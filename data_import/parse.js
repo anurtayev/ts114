@@ -2,92 +2,70 @@ const Papa = require("papaparse");
 const { readFileSync, writeFileSync } = require("fs");
 const { v4 } = require("uuid");
 const tableName = "Project-jqpbq4sqxjespmvcx2e7xedi4y-dev";
-const AWS = require("aws-sdk");
 
-AWS.config.update({
-  region: "us-west-2",
-  endpoint: "http://localhost:8000",
-});
+const getTasks = (file) =>
+  Papa.parse(readFileSync(`./projects/${file}-Table 1.csv`, "utf-8")).data;
 
-const phasesAll = {
-  Vacation: ["Vacation"],
-  "Business Development": ["Business Development"],
-  "KWA Non Billable Improvements": ["KWA Non Billable Improvements"],
-  Standard: Papa.parse(readFileSync("./projects/Standard-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => `${element[0]} - ${element[1]}`),
-  Lowes: Papa.parse(
-    readFileSync("./projects/Lowes-Table 1.csv", "utf-8")
-  ).data.map((element) => element[0]),
-  WalCovid: Papa.parse(
-    readFileSync("./projects/WalCovid-Table 1.csv", "utf-8")
-  ).data.map((element) => element[0]),
-  20538: Papa.parse(
-    readFileSync("./projects/20538-Table 1.csv", "utf-8")
-  ).data.map((element) => element[0] + " " + element[1]),
-  20539: Papa.parse(readFileSync("./projects/20539-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => element[0] + " " + element[1]),
-  20540: Papa.parse(readFileSync("./projects/20540-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => element[0] + " " + element[1]),
-  19449: Papa.parse(readFileSync("./projects/19449-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => element[0] + " " + element[1]),
-  20522: Papa.parse(readFileSync("./projects/20522-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => element[0] + " " + element[1])
-    .filter((element) => element.trim().length),
-  17298: Papa.parse(readFileSync("./projects/17298-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => element[0] + " " + element[1])
-    .filter((element) => element.trim().length),
-  20481: Papa.parse(readFileSync("./projects/20481-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => element[0] + " " + element[1])
-    .filter((element) => element.trim().length),
-  20495: Papa.parse(readFileSync("./projects/20495-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => element[0] + " " + element[1])
-    .filter((element) => element.trim().length),
-  20497: Papa.parse(readFileSync("./projects/20497-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => element[0] + " " + element[1])
-    .filter((element) => element.trim().length),
-  20489: Papa.parse(readFileSync("./projects/20489-Table 1.csv", "utf-8"))
-    .data.filter((element) => element.length > 1)
-    .map((element) => element[0] + " " + element[1])
-    .filter((element) => element.trim().length),
+const tasksAll = {
+  Vacation: [["Vacation"]],
+  "Business Development": [["Business Development"]],
+  "KWA Non Billable Improvements": [["KWA Non Billable Improvements"]],
+  Standard: getTasks("Standard"),
+  Lowes: getTasks("Lowes"),
+  WalCovid: getTasks("WalCovid"),
+  20538: getTasks("20538"),
+  20539: getTasks("20539"),
+  20540: getTasks("20540"),
+  19449: getTasks("19449"),
+  20522: getTasks("20522"),
+  17298: getTasks("17298"),
+  20481: getTasks("20481"),
+  20495: getTasks("20495"),
+  20497: getTasks("20497"),
+  20489: getTasks("20489"),
 };
+
+const dumpImportFile = ({ accumulator, accumulatorIndex }) =>
+  writeFileSync(
+    `projects-import-${accumulatorIndex}.json`,
+    JSON.stringify({
+      [tableName]: accumulator.map(([number, name, phases]) => {
+        return {
+          PutRequest: {
+            Item: {
+              __typename: { S: "Project" },
+              name: { S: name },
+              number: { S: number },
+              tasks: {
+                L: tasksAll[phases].map((task) => ({ S: task[0] })),
+              },
+              id: { S: v4() },
+              createdAt: { S: new Date().toISOString() },
+              updatedAt: { S: new Date().toISOString() },
+            },
+          },
+        };
+      }),
+    })
+  );
 
 let accumulator = [];
 let accumulatorIndex = 0;
-Papa.parse(readFileSync("./projects/projects-list-Table 1.csv", "utf-8"))
+let totalProjects = 0;
+Papa.parse(readFileSync("./projects/projects-Table 1.csv", "utf-8"))
   .data.slice(1)
   .forEach((project, index) => {
     accumulator.push(project);
+    totalProjects++;
     if (++index % 25 === 0) {
-      writeFileSync(
-        `projects-import-${accumulatorIndex++}.json`,
-        JSON.stringify({
-          [tableName]: accumulator.map(([number, name, phases]) => {
-            return {
-              PutRequest: {
-                Item: {
-                  __typename: { S: "Project" },
-                  name: { S: name },
-                  number: { S: number },
-                  tasks: { L: phasesAll[phases].map((task) => ({ S: task })) },
-                  id: { S: v4() },
-                  createdAt: { S: new Date().toISOString() },
-                  updatedAt: { S: new Date().toISOString() },
-                },
-              },
-            };
-          }),
-        })
-      );
-
+      dumpImportFile({ accumulator, accumulatorIndex });
       accumulator = [];
+      accumulatorIndex++;
     }
   });
+
+if (accumulator.length > 0) {
+  dumpImportFile({ accumulator, accumulatorIndex });
+}
+
+console.log("prjects processed", totalProjects);
