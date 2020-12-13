@@ -28,6 +28,7 @@ export const LoadingIndicator = styled.div`
   height: 80px;
 
   &:after {
+    background-color: red;
     content: " ";
     display: block;
     border-radius: 50%;

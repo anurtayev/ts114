@@ -1,1 +1,1043 @@
-{"Project-jqpbq4sqxjespmvcx2e7xedi4y-dev":[{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"Vacation"},"number":{"S":"10000"},"tasks":{"L":[{"S":"Vacation"}]},"id":{"S":"8dd09c2a-9423-405e-9220-438b500eee46"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"Business Development"},"number":{"S":"10100"},"tasks":{"L":[{"S":"Business Development"}]},"id":{"S":"c951c9ab-617a-47ee-a4e1-932da30eb2cc"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"KWA Non Billable Improvements"},"number":{"S":"10200"},"tasks":{"L":[{"S":"KWA Non Billable Improvements"}]},"id":{"S":"3f186a6f-a2f1-4e0d-810d-93ede4c9f148"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"Choice - Coquitlam (Superstore)"},"number":{"S":"13036"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"b29c8e5f-52fe-4dbc-934a-9b87a5b43c5e"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"0976440 BC Ltd. - 3011 No. 5 Road Richmond"},"number":{"S":"14050"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"1eb0eeb5-6d10-463b-bc0c-a48fae0188a1"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"Walmart Gander"},"number":{"S":"14055"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"30a6665d-d0cb-4e1c-98ef-26e27b55b35b"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"Walmart Kitchener"},"number":{"S":"15153"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"21df0f3a-15f9-4267-987a-ea2fb29849be"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"Windsor West Gill Investments (Ram-Land)"},"number":{"S":"15191"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"b18092d0-f694-4567-93a4-fd72736e2842"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"CRH - 3087 Harrison Court"},"number":{"S":"15196"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"4d103656-b2c3-4db5-ba0a-ab9b77a2597f"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"UDGA 1301 Lougheed Highway (Choice)"},"number":{"S":"16211"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"d19e131e-7af9-42cc-8414-da1484c29387"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"Medallion - Maurier and Dufferin Commercial"},"number":{"S":"16212"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"481c80aa-eb69-4a33-aa31-3efa8ed80abe"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"Arutip - Part Lot Agreement Mount Pleasant"},"number":{"S":"16213"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"961477dd-e6a1-4418-affc-0e191db16bf3"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"33 Fairwood Place - Country Green Homes"},"number":{"S":"16215"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"5e43868d-ed72-44fe-8b07-c2ebcc0bd28c"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"VGA Petsmart Woodstock"},"number":{"S":"16216"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"63eb1575-5b91-419e-8a37-36f15fd06740"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"3151 Walmart"},"number":{"S":"16221"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"444c7b52-9bf0-4ead-adf6-86baf77f44fd"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"3650 Walmart"},"number":{"S":"16222"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"348afb5f-50a2-443a-a646-c4db456c6ca0"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"3013 Walmart"},"number":{"S":"16223"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"67573c1b-ee40-4c8f-8d48-9a146bb65d81"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"3152 Walmart"},"number":{"S":"16224"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"79700bc8-260c-4047-a1f7-49fa5a1d6d22"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"5838 Walmart (Surrey West)"},"number":{"S":"16225"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"95355e65-5aea-45f0-a20b-65073312bd15"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"3169 Walmart"},"number":{"S":"16226"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"3325c829-311e-42bf-b73a-612502f653e6"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"3155 Walmart"},"number":{"S":"16227"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"22235c28-6aa0-461b-8282-ac1a3412511c"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"3001 Walmart"},"number":{"S":"16228"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"197f1bde-0d28-47e3-9a23-51a2f1548276"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"3186 Walmart"},"number":{"S":"16229"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"5e810745-3ed1-4900-8317-d2ffc3f2a9e2"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"1038 Walmart (Strathroy)"},"number":{"S":"16235"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"93f6246e-5458-4311-be7e-d046ea7001c4"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}},{"PutRequest":{"Item":{"__typename":{"S":"Project"},"name":{"S":"Sutton Retirement Home"},"number":{"S":"16245"},"tasks":{"L":[{"S":"100 - PM"},{"S":"200 - Planning"},{"S":"300 - Site Planning"},{"S":"400 - Engineering"},{"S":"500 - Contract Admin"}]},"id":{"S":"5ef78b1d-7202-46e9-9514-8cd1d3b70167"},"createdAt":{"S":"2020-12-13T16:22:10.646Z"},"updatedAt":{"S":"2020-12-13T16:22:10.646Z"}}}}]}
+{
+    "Project-jqpbq4sqxjespmvcx2e7xedi4y-dev": [
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "Vacation"
+                    },
+                    "number": {
+                        "S": "10000"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "Vacation"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "8dd09c2a-9423-405e-9220-438b500eee46"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "Business Development"
+                    },
+                    "number": {
+                        "S": "10100"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "Business Development"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "c951c9ab-617a-47ee-a4e1-932da30eb2cc"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "KWA Non Billable Improvements"
+                    },
+                    "number": {
+                        "S": "10200"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "KWA Non Billable Improvements"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "3f186a6f-a2f1-4e0d-810d-93ede4c9f148"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "Choice - Coquitlam (Superstore)"
+                    },
+                    "number": {
+                        "S": "13036"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "b29c8e5f-52fe-4dbc-934a-9b87a5b43c5e"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "0976440 BC Ltd. - 3011 No. 5 Road Richmond"
+                    },
+                    "number": {
+                        "S": "14050"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "1eb0eeb5-6d10-463b-bc0c-a48fae0188a1"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "Walmart Gander"
+                    },
+                    "number": {
+                        "S": "14055"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "30a6665d-d0cb-4e1c-98ef-26e27b55b35b"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "Walmart Kitchener"
+                    },
+                    "number": {
+                        "S": "15153"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "21df0f3a-15f9-4267-987a-ea2fb29849be"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "Windsor West Gill Investments (Ram-Land)"
+                    },
+                    "number": {
+                        "S": "15191"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "b18092d0-f694-4567-93a4-fd72736e2842"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "CRH - 3087 Harrison Court"
+                    },
+                    "number": {
+                        "S": "15196"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "4d103656-b2c3-4db5-ba0a-ab9b77a2597f"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "UDGA 1301 Lougheed Highway (Choice)"
+                    },
+                    "number": {
+                        "S": "16211"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "d19e131e-7af9-42cc-8414-da1484c29387"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "Medallion - Maurier and Dufferin Commercial"
+                    },
+                    "number": {
+                        "S": "16212"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "481c80aa-eb69-4a33-aa31-3efa8ed80abe"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "Arutip - Part Lot Agreement Mount Pleasant"
+                    },
+                    "number": {
+                        "S": "16213"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "961477dd-e6a1-4418-affc-0e191db16bf3"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "33 Fairwood Place - Country Green Homes"
+                    },
+                    "number": {
+                        "S": "16215"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "5e43868d-ed72-44fe-8b07-c2ebcc0bd28c"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "VGA Petsmart Woodstock"
+                    },
+                    "number": {
+                        "S": "16216"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "63eb1575-5b91-419e-8a37-36f15fd06740"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "3151 Walmart"
+                    },
+                    "number": {
+                        "S": "16221"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "444c7b52-9bf0-4ead-adf6-86baf77f44fd"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "3650 Walmart"
+                    },
+                    "number": {
+                        "S": "16222"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "348afb5f-50a2-443a-a646-c4db456c6ca0"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "3013 Walmart"
+                    },
+                    "number": {
+                        "S": "16223"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "67573c1b-ee40-4c8f-8d48-9a146bb65d81"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "3152 Walmart"
+                    },
+                    "number": {
+                        "S": "16224"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "79700bc8-260c-4047-a1f7-49fa5a1d6d22"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "5838 Walmart (Surrey West)"
+                    },
+                    "number": {
+                        "S": "16225"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "95355e65-5aea-45f0-a20b-65073312bd15"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "3169 Walmart"
+                    },
+                    "number": {
+                        "S": "16226"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "3325c829-311e-42bf-b73a-612502f653e6"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "3155 Walmart"
+                    },
+                    "number": {
+                        "S": "16227"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "22235c28-6aa0-461b-8282-ac1a3412511c"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "3001 Walmart"
+                    },
+                    "number": {
+                        "S": "16228"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "197f1bde-0d28-47e3-9a23-51a2f1548276"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "3186 Walmart"
+                    },
+                    "number": {
+                        "S": "16229"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "5e810745-3ed1-4900-8317-d2ffc3f2a9e2"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "1038 Walmart (Strathroy)"
+                    },
+                    "number": {
+                        "S": "16235"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "93f6246e-5458-4311-be7e-d046ea7001c4"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        },
+        {
+            "PutRequest": {
+                "Item": {
+                    "__typename": {
+                        "S": "Project"
+                    },
+                    "name": {
+                        "S": "Sutton Retirement Home"
+                    },
+                    "number": {
+                        "S": "16245"
+                    },
+                    "tasks": {
+                        "L": [
+                            {
+                                "S": "100 - PM"
+                            },
+                            {
+                                "S": "200 - Planning"
+                            },
+                            {
+                                "S": "300 - Site Planning"
+                            },
+                            {
+                                "S": "400 - Engineering"
+                            },
+                            {
+                                "S": "500 - Contract Admin"
+                            }
+                        ]
+                    },
+                    "id": {
+                        "S": "5ef78b1d-7202-46e9-9514-8cd1d3b70167"
+                    },
+                    "createdAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    },
+                    "updatedAt": {
+                        "S": "2020-12-13T16:22:10.646Z"
+                    }
+                }
+            }
+        }
+    ]
+}

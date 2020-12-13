@@ -13,7 +13,7 @@ export const ProjectsScreen = () => {
   const [projects, setProjects] = useState();
 
   useEffect(() => {
-    const promise = API.graphql(graphqlOperation(meta.listOp));
+    const promise = API.graphql(graphqlOperation(meta.listOp, { limit: 1000 }));
     promise
       .then(
         ({

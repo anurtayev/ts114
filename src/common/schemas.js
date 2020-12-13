@@ -110,7 +110,7 @@ export const RecordSchema = Yup.object()
           edit: { order: 1, visible: true },
         },
         optionsPromise: () =>
-          API.graphql(graphqlOperation(listProjects)).then(
+          API.graphql(graphqlOperation(listProjects, { limit: 1000 })).then(
             ({
               data: {
                 listProjects: { items },
